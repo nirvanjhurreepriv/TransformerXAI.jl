@@ -1,0 +1,4 @@
+name = "TransformerXAI"
+uuid = "760f204d-c9d5-47fc-8112-97e58fae4ca6"
+authors = ["Charansurya Udaysingh Jhurree <charansurya.udaysingh.jhurree@informatik.hu-berlin.de>"]
+version = "0.1.0"
