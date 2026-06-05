@@ -2,3 +2,9 @@ name = "TransformerXAI"
 uuid = "760f204d-c9d5-47fc-8112-97e58fae4ca6"
 authors = ["Charansurya Udaysingh Jhurree <charansurya.udaysingh.jhurree@campus.tu-berlin.de>"]
 version = "0.1.0"
+
+[deps]
+Llama2 = "0e620e9f-4534-4490-8f63-949aea0a85e1"
+
+[compat]
+Llama2 = "1.1.0"
