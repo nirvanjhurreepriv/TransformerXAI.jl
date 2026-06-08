@@ -31,7 +31,6 @@ add https://github.com/nirvanjhurreepriv/TransformerXAI.jl
 ```
 5. Leave package mode and load the package 
 ```julia
-]
 using TransformerXAI
 ```
 
