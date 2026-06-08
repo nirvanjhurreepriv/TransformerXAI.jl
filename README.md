@@ -33,7 +33,7 @@ add https://github.com/nirvanjhurreepriv/TransformerXAI.jl
 ```julia
 using TransformerXAI
 ```
-Afterwards you can use all exported functions (for more informations on all available functions take a look at section "Base Functionality Guide")
+Afterwards you can use all exported functions (for more information on all available functions take a look at section "Base Functionality Guide")
 
 ## Start as developer
 1. Clone the repository
