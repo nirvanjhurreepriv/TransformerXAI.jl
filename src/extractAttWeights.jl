@@ -1,7 +1,3 @@
-# Since you need to have loaded the model somehow
-include("loadLlamaModel.jl")
-
-
 """
 Function returns attention weights from the selected layer as Matrix{Float32}.\n
 The Matrix has shape (n_heads * headsize, dim).\n

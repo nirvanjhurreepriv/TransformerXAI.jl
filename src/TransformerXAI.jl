@@ -1,7 +1,12 @@
 module TransformerXAI
 
 # Export the public API so tests can see these functions
-export load_llama_model, extract_att_weights_from_layer_llama, AttentionHeatmap, visualize_heatmap
+export 
+    load_llama_model, 
+    extract_att_weights_from_layer_llama, 
+    AttentionHeatmap, 
+    visualize_heatmap,
+    generate_attention_heatmap
 
 # Include source files
 include("loadLlamaModel.jl")
