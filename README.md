@@ -107,7 +107,7 @@ The returned object is a ChatBot from Llama2.jl that contains the loaded transfo
 ### Extract attention weights
 File:
 ```julia
-src/extractAttentionWeights.jl
+src/extractAttWeights.jl
 ```
 Main function:
 ```julia
@@ -115,7 +115,7 @@ extract_att_weights_from_layer(bot, layer)
 ```
 Example in Julia shell: 
 ```julia
-include("src/extractAttentionWeights.jl")
+include("src/extractAttWeights.jl")
 
 bot = load_llama_model(model_path, tokenizer_path)
 layer = 1
