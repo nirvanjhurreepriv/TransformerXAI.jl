@@ -67,7 +67,7 @@ add https://github.com/ConstantConstantin/Llama2.jl
 ```
 5. Install all recorded dependencies and precompile
 ```julia
-insantiate
+instantiate
 precompile
 ```
 6. Leave Julia shell
@@ -122,7 +122,7 @@ src/extractAttWeights.jl
 ```
 Main function:
 ```julia
-extract_att_weights_from_layer(bot, layer)
+extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Int=1, desired_head::Int=1)
 ```
 Example in Julia shell: 
 ```julia
@@ -130,9 +130,9 @@ include("src/extractAttWeights.jl")
 
 bot = load_llama_model(model_path, tokenizer_path)
 layer = 1
-attention_weights = extract_att_weights_from_layer(bot, layer)
+attention_history, token_strings = extract_att_weights(bot, input_prompt = "In a small village, there was a", desired_layer = 6)
 ```
-The function returns the attention weights for the given layer.
+The function returns the attention weights for the given layer as a Vector{Float32} as well as a Vector{String} containing the tokens from the input_prompt. This is semantically the same text as the input_prompt, however it is split by the tokenizer of the model. 
 
 ### Generate a basic attention heatmap
 File:
