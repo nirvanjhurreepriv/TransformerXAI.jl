@@ -5,7 +5,7 @@ Basic usage
 To use this example you need to have a model installed (see README for more information)
 =#
 # create a Chatbot with loadLlama.jl
-project_root = normpath(joinpath(@__DIR__, ".."))
+project_root = normpath(pkgdir(TransformerXAI))
 model_path = joinpath(project_root, "models", "stories42M.bin")
 tokenizer_path = joinpath(project_root, "models", "tokenizer.bin")
 
