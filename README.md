@@ -67,7 +67,7 @@ add https://github.com/ConstantConstantin/Llama2.jl
 ```
 5. Install all recorded dependencies and precompile
 ```julia
-insantiate
+instantiate
 precompile
 ```
 6. Leave Julia shell
@@ -93,6 +93,7 @@ Run the example from the project root:
 ```julia
 julia --project=. examples/basic_example.jl
 ```
+If Julia reports that a recorded dependency such as GR is missing, run the developer setup `instantiate` step first.
 
 ## Base Functionality Guide
 ### Load a Llama2 model
