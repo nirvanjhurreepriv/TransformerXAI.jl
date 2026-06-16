@@ -93,6 +93,7 @@ Run the example from the project root:
 ```julia
 julia --project=. examples/basic_example.jl
 ```
+By default, the generated SVG is saved as `examples/attention_heatmap.svg` below the current working directory. To choose a different location, include the example and call `run_basic_example(output_path="path/to/output-directory")`.
 If Julia reports that a recorded dependency such as GR is missing, run the developer setup `instantiate` step first.
 
 ## Base Functionality Guide
