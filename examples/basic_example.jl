@@ -1,9 +1,11 @@
-using TransformerXAI
 
 #=
 Basic usage
 To use this example you need to have a model installed (see README for more information)
 =#
+
+export run_basic_example
+
 function run_basic_example(; output_path=joinpath(pwd(), "examples"))
     # create a Chatbot with loadLlama.jl
     project_root = normpath(pkgdir(TransformerXAI))
