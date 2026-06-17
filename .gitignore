@@ -1,4 +1,4 @@
 models
-examples/attention_heatmap.svg
+*.svg
 docs/Manifest.toml
 test/Manifest.toml

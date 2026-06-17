@@ -1,5 +1,6 @@
 module TransformerXAI
 
+include("../examples/basic_example.jl")
 # Export the public API so tests can see these functions
 export 
     load_llama_model, 
