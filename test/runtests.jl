@@ -27,7 +27,7 @@ using TransformerXAI
 
     @testset "Edge Cases" begin
         # Type mismatch correctly triggers MethodError via strict dispatch
-        @test_throws MethodError extract_att_weights_from_layer_llama(nothing, 1)
-        @test_throws MethodError extract_att_weights_from_layer_llama("not a bot", 1)
+        @test_throws MethodError extract_att_weights(nothing)
+        @test_throws MethodError extract_att_weights("not a bot")
     end
 end
