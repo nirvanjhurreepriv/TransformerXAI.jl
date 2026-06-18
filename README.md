@@ -1,4 +1,10 @@
 # Transformer XAI
+
+[![CI](https://github.com/nirvanjhurreepriv/TransformerXAI.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/nirvanjhurreepriv/TransformerXAI.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![codecov](https://codecov.io/gh/nirvanjhurreepriv/TransformerXAI.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/nirvanjhurreepriv/TransformerXAI.jl)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/stable)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev)
+
 Transformer XAI is a Julia package for basic transformer interpretability experiments.
 
 ## Current functionality
@@ -160,7 +166,7 @@ src/attention_heatmap_expanded.jl
 ```
 Main function:
 ```julia
-visualize_heatmap(tokens,a attention)
+visualize_heatmap(tokens, attention)
 ```
 Example in Julia shell: 
 ```julia

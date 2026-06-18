@@ -1,3 +1,4 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Llama2 = "0e620e9f-4534-4490-8f63-949aea0a85e1"
 TransformerXAI = "760f204d-c9d5-47fc-8112-97e58fae4ca6"
