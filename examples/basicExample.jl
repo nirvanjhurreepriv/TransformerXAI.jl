@@ -44,7 +44,7 @@ function run_basic_example(; output_path=joinpath(pwd(), "examples"))
 
     # A terminal cannot display SVG images, so save the heatmap to a file.
     mkpath(output_path)
-    output_file = joinpath(output_path, "attention_heatmap.svg")
+    output_file = joinpath(output_path, "attentionHeatmap.svg")
     open(output_file, "w") do file
         show(file, MIME("image/svg+xml"), heatmap)
     end
