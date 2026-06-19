@@ -19,7 +19,6 @@ function visualize_heatmap(
     tokens::Vector{String},
     attention::Vector{<:Real},
 )::AttentionHeatmap
-    #converted Pseudecode to Code with AI
     number_of_tokens = length(tokens)
     expected_values = number_of_tokens * number_of_tokens
 
