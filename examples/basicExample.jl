@@ -19,11 +19,7 @@ function run_basic_example(; output_path=joinpath(pwd(), "examples"))
 
     attention_weights = extract_att_weights_from_layer_llama(bot, layer)
     println("Extracted attention weights size: ", size(attention_weights))
-
-    # Plot attention heatmap for given layer
-    plot = generate_attention_heatmap(bot, layer)
-
-
+    
     #=
     Usage of extended heat map plot
     =#
