@@ -1,4 +1,3 @@
-# import llama
 using Llama2
 
 """
