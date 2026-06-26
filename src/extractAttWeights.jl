@@ -231,6 +231,49 @@ function talktollm_changed(bot::ChatBot; prompt::String = "", max_tokens::Int=25
 end
 
 
+
+
+"""
+    get_att_matrix(bot::ChatBot; input_prompt::String="Once upon a time")
+
+This is a private help function.
+The point is to interface with the changed talktollm function above in a repeatable manner and return the attention_history, so wrapper functions can use it for whatever is needed.
+Calling this function does not generate new text, so the text inside output_tokens_strings will be semantically the same as input_prompt.
+
+# Arguments: 
+- `bot::ChatBot` : Model type from Llama2.jl
+- `input_prompt::String` : Text for which attention should be generated
+
+# Returns: 
+- `attention_history::Array{Float32, 4}` : contains the generated attention values (after softmax)
+Attention Matrix Dims: 
+        - [i,:,:,:] -> i selects the token for which the attention effect is to be considered
+        - [:,j,:,:] -> j selects, which head is being considered
+        - [:,:,k,:] -> k selects, which layer is being considered
+        - [:,:,:,l] -> l selects the token that is being affected
+
+- `output_tokens_strings::Vector{String}` : contains the individual tokens from input_prompt as separate strings. Useful for visualisation purposes.
+"""
+function get_att_matrix(bot::ChatBot; input_prompt::String="Once upon a time")
+    tok = bot.tokenizer
+    input_tokens = encode(tok, input_prompt)
+    length_of_input = length(input_tokens)
+
+    (length_of_input > 0) || throw(ArgumentError("input_prompt must contain more than $length_of_input tokens in the form of a string."))
+    
+
+    # Get the model to "look at" the prompt to get the attention history.
+    _, attention_history = talktollm_changed(bot, prompt=input_prompt, max_tokens=length_of_input, get_att=true);
+    
+    # Split input_prompt into separate strings which contain one token each, for visualisation purposes
+    output_tokens_strings = Vector{String}();
+    for i in 1:length_of_input
+        push!(output_tokens_strings,tok.vocab[input_tokens[i]])
+    end
+    
+    return attention_history, output_tokens_strings;
+end
+
 """
     extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Int=1, desired_head::Int=1)
 
@@ -252,27 +295,82 @@ function extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a tim
     (desired_layer > 0) || throw(ArgumentError("desired_layer needs to be larger than 0"))
     (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
 
-    tok = bot.tokenizer
-    input_tokens = encode(tok, input_prompt)
-    length_of_input = length(input_tokens)
-
+    length_of_input = length(encode(bot.tokenizer, input_prompt))
     (length_of_input > 0) || throw(ArgumentError("input_prompt must contain more than $length_of_input tokens in the form of a string."))
+
+    !(desired_layer > bot.transformer.config.n_layers) || throw(ArgumentError("desired_layer can't be larger than bot.transformer.config.n_layers, which is $(bot.transformer.config.n_layers). desired_layer = $desired_layer_depth."))
+
+    !(desired_head > bot.transformer.config.n_heads) || throw(ArgumentError("desired_head can't be larger than bot.transformer.config.n_heads, which is $(bot.transformer.config.n_heads). desired_head = $desired_head."))
+
+    attention_history, output_tokens_strings = get_att_matrix(bot, input_prompt = input_prompt);
     
 
-    # Get the model to "look at" the prompt to get the attention history.
-        #output_prompt, attention_history = talktollm_changed(bot.transformer, prompt=input_prompt, max_tokens=length_of_input, get_att=true);
-        # We don't need output_prompt
-    _, attention_history = talktollm_changed(bot, prompt=input_prompt, max_tokens=length_of_input, get_att=true);
 
-    # Split input_prompt into separate strings which contain one token each, for visualisation purposes
-    output_tokens_strings = Vector{String}();
-    # Restructure the attention matrix into a Vector, since that is what is what the visualize_heatmap function takes as a parameter.
-    # Also: Bring output_tokens_strings into the correct format.
-    attention_vector = Vector{Float32}();
-    for i in 1:length_of_input
-        append!(attention_vector, attention_history[:,desired_head,desired_layer,i]);
-        push!(output_tokens_strings,tok.vocab[input_tokens[i]])
-    end
+    # Restructure the attention matrix into a Vector, since that is what the visualize_heatmap function takes as a parameter.
+    #attention_vector = reshape(attention_history[:,desired_head,desired_layer,:],length_of_input^2);
+    #return attention_vector, output_tokens_strings;
+    return attention_history[:, desired_head, desired_layer, :], output_tokens_strings;
+end
 
-    return attention_vector, output_tokens_strings
+
+
+
+# Added this function here, since I do not want to export get_att_matrix(), but I do need it here. 
+# Not sure how to do that nicely in julia so this will have to do.
+"""
+    calc_att_rollout(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer_depth::Int=1, desired_head::Int=1)
+
+This is a slightly changed version of extract_att_weights().
+Instead of returning just the 2D attention matrix for _one layer_ and one attention head, this returns the rolled up attention matrix for one attention head but _all the layers_.
+
+Calls a modified version of talktollm from Llama2.jl to collect attention weights.
+Calling this function does not generate new text, so the text inside output_tokens_strings will be semantically the same as input_prompt.
+
+# Arguments: 
+- `bot::ChatBot` : Model type from Llama2.jl
+- `input_prompt::String` : Text for which attention should be generated (doesn't generate new text)
+- `desired_layer_depth::Int` : The layer up to which the attention should be rolled up (starting at the first layer)
+- `desired_layer::Int` : The attentionhead from which the attention should be returned
+
+# Returns: 
+- `rollout_matrix::Array{Float32,3}` : contains the generated and rolled up attention values. Shape: 
+   Rollout Matrix Dims: 
+        - [i,:,:] -> i selects the token for which the attention effect is to be considered
+        - [:,j,:] -> j selects the token that is being affected
+        - [:,:,k] -> k selects, which layer is being considered
+- `output_tokens_strings::Vector{String}` : contains the individual tokens from input_prompt as separate strings
+"""
+function calc_att_rollout(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer_depth::Int=1, desired_head::Int=1)
+    # Safety Checks
+    (desired_layer_depth > 0) || throw(ArgumentError("desired_layer_depth needs to be larger than 0"))
+    (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
+
+    nr_of_layers = bot.transformer.config.n_layers;
+    (nr_of_layers > 0) || throw(ArgumentError("The bot must contain at least one layer. bot.transformer.config.n_layers = $nr_of_layers"))
+
+    length_of_input = length(encode(bot.tokenizer, input_prompt))
+    (length_of_input > 0) || throw(ArgumentError("input_prompt must contain more than $length_of_input tokens in the form of a string."))
+
+    !(desired_layer_depth > nr_of_layers) || throw(ArgumentError("desired_layer_depth can't be larger than bot.transformer.config.n_layers, which is $nr_of_layers. desired_layer_depth = $desired_layer_depth."))
+
+    !(desired_head > bot.transformer.config.n_heads) || throw(ArgumentError("desired_head can't be larger than bot.transformer.config.n_heads, which is $(bot.transformer.config.n_heads). desired_head = $desired_head."))
+
+    attention_history, output_tokens_strings = get_att_matrix(bot, input_prompt = input_prompt)
+
+    #### New part
+    # (Source for Rollout-Theory: https://storrs.io/attention-rollout)
+    # recursively take the (normal/dot) product of the attention matrix of the new layer and the attention rollout of the old.
+    # Rollout Matrix Dims: 
+    #   - [i,:,:] -> i selects the token for which the attention effect is to be considered
+    #   - [:,j,:] -> j selects the token that is being affected
+    #   - [:,:,k] -> k selects, which layer is being considered
+    rollout_matrix = zeros(Float32, length_of_input, length_of_input, min(nr_of_layers,desired_layer_depth))
+    rollout_matrix[:,:,1] = attention_history[:,desired_head,1,:]
+    if desired_layer_depth > 1 
+        for i in 2:desired_layer_depth
+            rollout_matrix[:,:,i] = attention_history[:,desired_head,i,:] * rollout_matrix[:,:,i-1]
+        end
+    end 
+
+    return rollout_matrix, output_tokens_strings;
 end

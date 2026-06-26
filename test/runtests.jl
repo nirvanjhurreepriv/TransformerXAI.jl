@@ -22,5 +22,6 @@ using TransformerXAI
     include("forwardTestChanged.jl")
     include("talkTestChanged.jl")
     include("extractAttentionWeightsTest.jl")
+    include("attentionRolloutTest.jl")
     include("visualizeHeatmapTest.jl")
 end

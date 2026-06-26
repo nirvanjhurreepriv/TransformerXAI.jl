@@ -3,11 +3,11 @@ The data needed to display an attention-flow heatmap.
 """
 struct AttentionHeatmap
     tokens::Vector{String}
-    attention::Matrix{Float64}
+    attention::Array{Float32,2}
 end
 
 """
-    visualize_heatmap(tokens::Vector{String}, attention::Vector{<:Real})
+    visualize_heatmap(tokens::Vector{String}, attention::Array{Float32,2})
 
 Create an attention-flow heatmap for `tokens`.
 
@@ -17,7 +17,7 @@ order is `[1->1, 1->2, 2->1, 2->2]`.
 """
 function visualize_heatmap(
     tokens::Vector{String},
-    attention::Vector{<:Real},
+    attention::Array{Float32,2},
 )::AttentionHeatmap
     number_of_tokens = length(tokens)
     expected_values = number_of_tokens * number_of_tokens
@@ -32,12 +32,7 @@ function visualize_heatmap(
         ))
     end
 
-    # Each row belongs to a referencing token.
-    attention_matrix = Matrix(
-        reshape(Float64.(attention), number_of_tokens, number_of_tokens)'
-    )
-
-    return AttentionHeatmap(copy(tokens), attention_matrix)
+    return AttentionHeatmap(copy(tokens), attention')
 end
 
 # Replace characters that have a special meaning in SVG.
