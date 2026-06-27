@@ -1,4 +1,3 @@
-
 #=
 Basic usage
 To use this example you need to have a model installed (see README for more information)
@@ -10,6 +9,7 @@ function run_basic_example(; output_path=joinpath(pwd(), "examples"))
     # create a Chatbot with loadLlama.jl
     project_root = normpath(pkgdir(TransformerXAI))
     model_path = joinpath(project_root, "models", "stories42M.bin")
+    print("model path: ", model_path)
     tokenizer_path = joinpath(project_root, "models", "tokenizer.bin")
 
     bot = load_llama_model(model_path, tokenizer_path)
@@ -21,25 +21,21 @@ function run_basic_example(; output_path=joinpath(pwd(), "examples"))
     println("Extracted attention weights size: ", size(attention_weights))
     
     #=
+    Usage of matrix heatmap plot
+    =#
+    heatmap_matrix = generate_attention_heatmap_matrix(attention_weights, tokens)
+    
+    mkpath(output_path)
+
+    output_file_matrix = joinpath(output_path, "attentionHeatmapMatrix.svg")
+    Plots.savefig(heatmap_matrix, output_file_matrix)
+
+    #=
     Usage of extended heat map plot
     =#
-    tokens = ["I", "like", "doing", "my", "homework."]
-
-    # Each row describes how much one token attends to all tokens.
-    # Strong examples are "like" -> "I", "doing" -> "like",
-    # and "homework." -> "doing" or "my".
-    attention = [
-        1.0, 0.0, 0.0, 0.0, 0.0,  # I
-        0.8, 1.0, 0.0, 0.0, 0.0,  # like
-        0.2, 0.9, 1.0, 0.0, 0.0,  # doing
-        0.1, 0.1, 0.3, 1.0, 0.0,  # my
-        0.1, 0.2, 0.8, 0.9, 1.0,  # homework.
-    ]
-
-    heatmap = visualize_heatmap(tokens, attention)
+    heatmap = visualize_heatmap(tokens, attention_weights)
 
     # A terminal cannot display SVG images, so save the heatmap to a file.
-    mkpath(output_path)
     output_file = joinpath(output_path, "attentionHeatmap.svg")
     open(output_file, "w") do file
         show(file, MIME("image/svg+xml"), heatmap)
