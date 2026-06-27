@@ -17,7 +17,7 @@ function run_basic_example(; output_path=joinpath(pwd(), "examples"))
     # Get attention weights for given layer (not needed, if you only want to visualize them)
     layer = 1
 
-    attention_weights = extract_att_weights_from_layer_llama(bot, layer)
+    attention_weights, tokens = extract_att_weights(bot; desired_layer=layer)
     println("Extracted attention weights size: ", size(attention_weights))
     
     #=
