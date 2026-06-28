@@ -24,4 +24,5 @@ using TransformerXAI
     include("extractAttentionWeightsTest.jl")
     include("attentionRolloutTest.jl")
     include("visualizeHeatmapTest.jl")
+    include("rolloutVisualizerTest.jl")
 end
