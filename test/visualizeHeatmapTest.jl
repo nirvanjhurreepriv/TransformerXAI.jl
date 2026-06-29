@@ -3,11 +3,11 @@
         @testset "Normal Case, check if output is correct" begin
             tokens = ["I", "like", "doing", "my", "homework."]
             attention = [
-                1.0, 0.0, 0.0, 0.0, 0.0,  # I
-                0.8, 1.0, 0.0, 0.0, 0.0,  # like
-                0.2, 0.9, 1.0, 0.0, 0.0,  # doing
-                0.1, 0.1, 0.3, 1.0, 0.0,  # my
-                0.1, 0.2, 0.8, 0.9, 1.0,  # homework.
+                1.0f0  0.0f0  0.0f0  0.0f0  0.0f0;  # I
+                0.8f0  1.0f0  0.0f0  0.0f0  0.0f0;  # like
+                0.2f0  0.9f0  1.0f0  0.0f0  0.0f0;  # doing
+                0.1f0  0.1f0  0.3f0  1.0f0  0.0f0;  # my
+                0.1f0  0.2f0  0.8f0  0.9f0  1.0f0  # homework.
             ]
             out = visualize_heatmap(tokens, attention)
 
@@ -20,11 +20,11 @@
         @testset "Check empty input tokens" begin
             tokens = String[]
             attention = [
-                1.0, 0.0, 0.0, 0.0, 0.0,  # I
-                0.8, 1.0, 0.0, 0.0, 0.0,  # like
-                0.2, 0.9, 1.0, 0.0, 0.0,  # doing
-                0.1, 0.1, 0.3, 1.0, 0.0,  # my
-                0.1, 0.2, 0.8, 0.9, 1.0,  # homework.
+                1.0f0  0.0f0  0.0f0  0.0f0  0.0f0;  # I
+                0.8f0  1.0f0  0.0f0  0.0f0  0.0f0;  # like
+                0.2f0  0.9f0  1.0f0  0.0f0  0.0f0;  # doing
+                0.1f0  0.1f0  0.3f0  1.0f0  0.0f0;  # my
+                0.1f0  0.2f0  0.8f0  0.9f0  1.0f0  # homework.
             ]
 
             @test_throws ArgumentError visualize_heatmap(tokens, attention)
@@ -33,11 +33,11 @@
         # visualize heatmap exp check wrong input attention size
         @testset "Check wrong and empty attention size" begin
             tokens = ["I", "like", "doing", "my", "homework."]
-            attention1 = Float64[]
+            attention1 = Float32[;;]
             attention2 = [
-                1.0, 0.0, 0.0,
-                0.0, 1.0, 0.0,
-                0.0, 0.0, 1.0
+                1.0f0  0.0f0  0.0f0;
+                0.0f0  1.0f0  0.0f0;
+                0.0f0  0.0f0  1.0f0
             ]
 
             @test_throws ArgumentError visualize_heatmap(tokens, attention1)
@@ -48,11 +48,11 @@
         @testset "Check svg output" begin
             tokens = ["I", "like", "doing", "my", "homework."]
             attention = [
-                1.0, 0.0, 0.0, 0.0, 0.0,  # I
-                0.8, 1.0, 0.0, 0.0, 0.0,  # like
-                0.2, 0.9, 1.0, 0.0, 0.0,  # doing
-                0.1, 0.1, 0.3, 1.0, 0.0,  # my
-                0.1, 0.2, 0.8, 0.9, 1.0,  # homework.
+                1.0f0  0.0f0  0.0f0  0.0f0  0.0f0;  # I
+                0.8f0  1.0f0  0.0f0  0.0f0  0.0f0;  # like
+                0.2f0  0.9f0  1.0f0  0.0f0  0.0f0;  # doing
+                0.1f0  0.1f0  0.3f0  1.0f0  0.0f0;  # my
+                0.1f0  0.2f0  0.8f0  0.9f0  1.0f0  # homework.
             ]
             out = visualize_heatmap(tokens, attention)
             
@@ -74,8 +74,8 @@
         @testset "Check svg: only one line per attention value" begin
             tokens = ["My", "test"]
             attention = [
-                1.0, 0.0,
-                0.0, 1.0
+                1.0f0  0.0f0;
+                0.0f0  1.0f0
             ]
 
             out = visualize_heatmap(tokens, attention)

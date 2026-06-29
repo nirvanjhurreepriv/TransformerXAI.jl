@@ -298,7 +298,7 @@ function extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a tim
     length_of_input = length(encode(bot.tokenizer, input_prompt))
     (length_of_input > 0) || throw(ArgumentError("input_prompt must contain more than $length_of_input tokens in the form of a string."))
 
-    !(desired_layer > bot.transformer.config.n_layers) || throw(ArgumentError("desired_layer can't be larger than bot.transformer.config.n_layers, which is $(bot.transformer.config.n_layers). desired_layer = $desired_layer_depth."))
+    !(desired_layer > bot.transformer.config.n_layers) || throw(ArgumentError("desired_layer can't be larger than bot.transformer.config.n_layers, which is $(bot.transformer.config.n_layers). desired_layer = $desired_layer."))
 
     !(desired_head > bot.transformer.config.n_heads) || throw(ArgumentError("desired_head can't be larger than bot.transformer.config.n_heads, which is $(bot.transformer.config.n_heads). desired_head = $desired_head."))
 
