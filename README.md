@@ -1,6 +1,6 @@
 # Transformer XAI
 
-[![CI](https://github.com/nirvanjhurreepriv/TransformerXAI.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/nirvanjhurreepriv/TransformerXAI.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![CI](https://github.com/nirvanjhurreepriv/TransformerXAI.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/nirvanjhurreepriv/TransformerXAI.jl/actions/workflows/ci.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/nirvanjhurreepriv/TransformerXAI.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/nirvanjhurreepriv/TransformerXAI.jl)
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/stable)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev)
@@ -82,13 +82,13 @@ exit()
 ```
 7. Download the model files (optional, you can download your own model files as well)
 ```julia
-julia --project=. scripts/download_model.jl
+julia --project=. scripts/downloadModel.jl
 ```
 
 ## Running the example
 The repository contains a basic example file
 ```julia
-examples/basic_example.jl
+examples/basicExample.jl
 ```
 Before you load the example, make sure the model files exist:
 ```julia
@@ -97,7 +97,7 @@ models/tokenizer.bin
 ```
 Run the example from the project root:
 ```julia
-julia --project=. examples/basic_example.jl
+julia --project=. examples/basicExample.jl
 ```
 
 ## Base Functionality Guide
@@ -143,7 +143,7 @@ The function returns the attention weights for the given layer as a Vector{Float
 ### Generate a basic attention heatmap
 File:
 ```julia
-src/attention_heatmap_base.jl
+src/attentionHeatmapBase.jl
 ```
 Main function:
 ```julia
@@ -151,7 +151,7 @@ generate_attention_heatmap(bot, layer)
 ```
 Example in Julia shell: 
 ```julia
-include("src/attention_heatmap_base.jl")
+include("src/attentionHeatmapBase.jl")
 
 bot = load_llama_model(model_path, tokenizer_path)
 layer = 1
@@ -162,7 +162,7 @@ The function plots the attention heatmap.
 ### Generate an extended token-labeled heatmap
 File:
 ```julia
-src/attention_heatmap_expanded.jl
+src/attentionHeatmapExpanded.jl
 ```
 Main function:
 ```julia
@@ -170,7 +170,7 @@ visualize_heatmap(tokens, attention)
 ```
 Example in Julia shell: 
 ```julia
-include("src/attention_heatmap_expanded.jl")
+include("src/attentionHeatmapExpanded.jl")
 
 tokens = ["I", "like", "doing", "my", "homework."]
 
