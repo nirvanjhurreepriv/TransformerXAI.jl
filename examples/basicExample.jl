@@ -1,3 +1,4 @@
+using TransformerXAI
 #=
 Basic usage
 To use this example you need to have a model installed (see README for more information)

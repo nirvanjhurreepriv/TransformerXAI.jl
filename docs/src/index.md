@@ -31,4 +31,4 @@ attention, tokens = extract_att_weights(bot; input_prompt="Once upon a time", de
 ```
 
 See the [API Reference](api.md) for full function documentation, or
-`examples/BasicExample.jl` in the repository for a runnable end-to-end script.
+`examples/basicExample.jl` in the repository for a runnable end-to-end script.

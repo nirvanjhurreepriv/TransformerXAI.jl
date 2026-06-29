@@ -20,3 +20,6 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
 test = ["Test"]
+
+[sources]
+Llama2 = {url = "https://github.com/ConstantConstantin/Llama2.jl", rev = "main"}

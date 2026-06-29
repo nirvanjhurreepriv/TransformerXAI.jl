@@ -1,11 +1,5 @@
 # This file contains two functions from the Llama2.jl project which have been slightly modified, to allow the extraction of attention.
 
-using LinearAlgebra: dot
-using StatsBase: wsample
-using Llama2: Config, ChatBot, Transformer, rmsnorm, Tokenizer, encode, softmax!
-
-
-
 """
 This is mostly a copy of the "forward!" function from https://github.com/ConstantConstantin/Llama2.jl/blob/main/src/forward.jl. Modified to allow accessing the attention which the original function does not permit.
 
@@ -139,10 +133,6 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
 end
 
 
-
-
-
-
 """
 This is mostly a copy of the "talktollm" function from https://github.com/ConstantConstantin/Llama2.jl/blob/main/src/talk.jl. Modified to allow accessing the attention which the original function does not permit.
 
@@ -231,8 +221,6 @@ function talktollm_changed(bot::ChatBot; prompt::String = "", max_tokens::Int=25
 end
 
 
-
-
 """
     get_att_matrix(bot::ChatBot; input_prompt::String="Once upon a time")
 
@@ -284,7 +272,7 @@ Calling this function does not generate new text, so the text inside output_toke
 - `bot::ChatBot` : Model type from Llama2.jl
 - `input_prompt::String` : Text for which attention should be generated
 - `desired_layer::Int` : The layer from which the attention should be returned
-- `desired_layer::Int` : The attentionhead from which the attention should be returned
+- `desired_head::Int` : The attention head from which the attention should be returned
 
 # Returns: 
 - `attention_vector::Vector{Float32}` : contains the generated attention values (after softmax)
