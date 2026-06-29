@@ -21,7 +21,7 @@
             @test all(isfinite, att_matrix)
             @test !isempty(tokens)
             @test tokens isa Vector{String}
-            @test shape(exp_shape) == shape(att_matrix)
+            @test size(exp_shape) == size(att_matrix)
         end
 
         # returned tokens correct?
