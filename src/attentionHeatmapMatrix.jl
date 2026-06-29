@@ -21,20 +21,18 @@ The function creates a basic heatmap matrix
 
     m = generate_attention_heatmap_matrix(attention_history, token_strings)
 """
-function generate_attention_heatmap_matrix(att_vector, tokens)
+function generate_attention_heatmap_matrix(att_matrix, tokens)
     n = length(tokens)
 
-    if length(att_vector) != length(tokens)^2
+    if length(att_matrix) != n^2
         throw(ArgumentError("input size mismatch"))
     end
 
-    # att_vector is 1D -> need it to be 2D
-    matrix = reshape(att_vector, length(tokens), length(tokens))'
-
+    
     heatmap(
         1:n,
         1:n,
-        matrix,
+        att_matrix',
         title = "Attention Heatmap",
         xlabel = "Attended Token",
         ylabel = "Query Token",
