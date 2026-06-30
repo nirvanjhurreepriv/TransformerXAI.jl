@@ -89,8 +89,8 @@ https://github.com/ConstantConstantin/Llama2.jl
 ```
 
 ## Open TODOs / Currently in progress
-* docstrings for rollout tests
-* in general: more tests
+* docstrings for rollout visualization tests
+* tests for rollout calculation
 * merge of attention flow implementation + testing
 * more tests for all cases without model files
-* tests for rollout calculation
+* (more visualization of attention rollout)
