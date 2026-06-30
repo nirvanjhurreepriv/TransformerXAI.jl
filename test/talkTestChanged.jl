@@ -8,7 +8,7 @@
             bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
-            out = talktollm_changed(
+            out = TransformerXAI.talktollm_changed(
                 bot;
                 prompt=prompt,
                 max_tokens=3,
@@ -23,7 +23,7 @@
             bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
-            out, att_history = talktollm_changed(
+            out, att_history = TransformerXAI.talktollm_changed(
                 bot;
                 prompt=prompt,
                 max_tokens=3,
