@@ -73,18 +73,6 @@ heatmap = generate_attention_heatmap_matrix(
 )
 ```
 
-The repository also contains a runnable example file:
-
-```text
-examples/basicExample.jl
-```
-
-Run it from the project root with:
-
-```bash
-julia --project=. examples/basicExample.jl
-```
-
 ## Documentation
 
 More information is available in the documentation:

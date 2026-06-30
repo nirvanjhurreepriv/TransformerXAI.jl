@@ -99,7 +99,6 @@ generate_attention_heatmap_matrix(
     att_matrix::Matrix{<:Real}, 
     tokens::Vector{String}
 )
-
 ```
 
 Example:
@@ -275,13 +274,14 @@ tokenizer_path = "models/tokenizer.bin"
 
 bot = load_llama_model(model_path, tokenizer_path)
 
+layer = 3
 layer_depth = 3
 head = 1
 
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = "In a small village, there was a",
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )
 
@@ -294,6 +294,10 @@ heatmap = visualize_heatmap(
     token_strings, 
     attention_matrix    
 )
+
+open("attentionHeatmap.svg", "w") do file
+    show(file, MIME("image/svg+xml"), heatmap)
+end
 
 rollout_matrix, token_strings = calc_att_rollout(
     bot;

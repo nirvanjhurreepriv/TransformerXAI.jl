@@ -23,4 +23,4 @@ include("attentionHeatmapExpanded.jl")
 include("attentionHeatmapMatrix.jl")
 include("attentionRolloutVisualizer.jl")
 
-end # module
+end # end module
