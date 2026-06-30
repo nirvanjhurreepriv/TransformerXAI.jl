@@ -16,6 +16,12 @@ Enter package mode by pressing:
 ]
 ```
 
+Add Llama2.jl from GitHub:
+
+```julia
+add https://github.com/ConstantConstantin/Llama2.jl
+```
+
 Add TransformerXAI.jl from GitHub:
 
 ```julia
