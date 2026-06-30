@@ -35,7 +35,7 @@ Then load the package:
 using TransformerXAI
 ```
 
-For more detailed installation instructions, see the [Getting Started Guide](docs/src/gettingStarted.md).
+For more detailed installation instructions, see the [Getting Started Guide](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev/gettingStarted/).
 
 ## Model files
 
@@ -48,7 +48,7 @@ models/stories42M.bin
 models/tokenizer.bin
 ```
 
-An example of a model and tokenizer download can be found in the [Getting Started Guide](docs/src/gettingStarted.md).
+An example of a model and tokenizer download can be found in the [Getting Started Guide](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev/gettingStarted/).
 
 ## Basic Example
 
@@ -79,8 +79,8 @@ heatmap = generate_attention_heatmap_matrix(
 
 More information is available in the documentation:
 
-* [Getting Started](docs/src/gettingStarted.md)
-* [Functionality Guide](docs/src/functionality.md)
+* [Getting Started](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev/gettingStarted/)
+* [Functionality Guide](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev/functionality/)
 
 ## External Dependency
 
