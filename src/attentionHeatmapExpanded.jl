@@ -32,7 +32,7 @@ function visualize_heatmap(
         ))
     end
 
-    return AttentionHeatmap(copy(tokens), attention')
+    return AttentionHeatmap(copy(tokens), collect(attention'))
 end
 
 # Replace characters that have a special meaning in SVG.
