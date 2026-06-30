@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Functionality Guide · TransformerXAI.jl</title><meta name="title" content="Functionality Guide · TransformerXAI.jl"/><meta property="og:title" content="Functionality Guide · TransformerXAI.jl"/><meta property="twitter:title" content="Functionality Guide · TransformerXAI.jl"/><meta name="description" content="Documentation for TransformerXAI.jl."/><meta property="og:description" content="Documentation for TransformerXAI.jl."/><meta property="twitter:description" content="Documentation for TransformerXAI.jl."/><meta property="og:url" content="https://nirvanjhurreepriv.github.io/TransformerXAI.jl/functionality/"/><meta property="twitter:url" content="https://nirvanjhurreepriv.github.io/TransformerXAI.jl/functionality/"/><link rel="canonical" href="https://nirvanjhurreepriv.github.io/TransformerXAI.jl/functionality/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">TransformerXAI.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../api/">API Reference</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Functionality Guide</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Functionality Guide</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/nirvanjhurreepriv/TransformerXAI.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/nirvanjhurreepriv/TransformerXAI.jl/blob/main/docs/src/functionality.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Functionality-Guide"><a class="docs-heading-anchor" href="#Functionality-Guide">Functionality Guide</a><a id="Functionality-Guide-1"></a><a class="docs-heading-anchor-permalink" href="#Functionality-Guide" title="Permalink"></a></h1><p>This page gives an overview of the main functionality currently provided by TransformerXAI.jl.</p><h2 id="Current-Functionality"><a class="docs-heading-anchor" href="#Current-Functionality">Current Functionality</a><a id="Current-Functionality-1"></a><a class="docs-heading-anchor-permalink" href="#Current-Functionality" title="Permalink"></a></h2><p>TransformerXAI.jl currently supports:</p><ul><li>loading a Llama2-compatible model</li><li>extracting attention weights from a given layer and head</li><li>generating a basic attention heatmap matrix</li><li>generating an extended token-labeled attention heatmap</li><li>calculating attention rollout across multiple layers</li><li>visualizing attention rollout as svg</li></ul><h2 id="Load-a-Llama2-Model"><a class="docs-heading-anchor" href="#Load-a-Llama2-Model">Load a Llama2 Model</a><a id="Load-a-Llama2-Model-1"></a><a class="docs-heading-anchor-permalink" href="#Load-a-Llama2-Model" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/loadLlamaModel.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">load_llama_model(model_path, tokenizer_path)</code></pre><p>Example:</p><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)</code></pre><p>The returned object is a <code>ChatBot</code> from <code>Llama2.jl</code>. It contains the loaded transformer, tokenizer, current position and last token.</p><h2 id="Extract-Attention-Weights"><a class="docs-heading-anchor" href="#Extract-Attention-Weights">Extract Attention Weights</a><a id="Extract-Attention-Weights-1"></a><a class="docs-heading-anchor-permalink" href="#Extract-Attention-Weights" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/extractAttWeights.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">attention_matrix, tokens = extract_att_weights(
+    bot::ChatBot;
+    input_prompt::String = &quot;Once upon a time&quot;,
+    desired_layer::Int = 1,
+    desired_head::Int = 1
+)</code></pre><p>Example:</p><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer = 1
+head = 1
+
+attention_matrix, token_strings = extract_att_weights(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer = layer.
+    desired_head = head
+)</code></pre><p>The function returns the attention weights for the selected layer and head, together with the tokenized input prompt.</p><p>The returned <code>token_strings</code> represent the same semantic text as the input prompt, but split according to the tokenizer of the loaded model.</p><h2 id="Generate-a-Basic-Attention-Heatmap-Matrix"><a class="docs-heading-anchor" href="#Generate-a-Basic-Attention-Heatmap-Matrix">Generate a Basic Attention Heatmap Matrix</a><a id="Generate-a-Basic-Attention-Heatmap-Matrix-1"></a><a class="docs-heading-anchor-permalink" href="#Generate-a-Basic-Attention-Heatmap-Matrix" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/attentionHeatmapMatrix.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">generate_attention_heatmap_matrix(
+    att_matrix::Matrix{&lt;:Real}, 
+    tokens::Vector{String}
+)</code></pre><p>Example:</p><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer = 1
+head = 1
+
+attention_matrix, token_strings = extract_att_weights(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer = layer.
+    desired_head = head
+)
+
+heatmap_matrix = generate_attention_heatmap_matrix(
+    attention_matrix,
+    token_strings
+)</code></pre><p>The function creates a basic attention heatmap matrix from the extracted attention weights and the corresponding tokens.</p><h2 id="Generate-an-Extended-Token-Labeled-Heatmap"><a class="docs-heading-anchor" href="#Generate-an-Extended-Token-Labeled-Heatmap">Generate an Extended Token-Labeled Heatmap</a><a id="Generate-an-Extended-Token-Labeled-Heatmap-1"></a><a class="docs-heading-anchor-permalink" href="#Generate-an-Extended-Token-Labeled-Heatmap" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/attentionHeatmapExpanded.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">visualize_heatmap(
+    tokens::Vector{String},
+    attention::Array{Float32,2},
+)</code></pre><p>Example:</p><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer = 1
+head = 1
+
+attention_matrix, token_strings = extract_att_weights(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer = layer.
+    desired_head = head
+)
+
+heatmap = visualize_heatmap(
+    token_strings, 
+    attention_matrix    
+)</code></pre><p>The function creates an extended token-labeled heatmap. It can be used with extracted attention weights or with manually defined attention patterns.</p><p>The generated visualization is SVG-compatible.</p><h2 id="Calculate-Attention-Rollout"><a class="docs-heading-anchor" href="#Calculate-Attention-Rollout">Calculate Attention Rollout</a><a id="Calculate-Attention-Rollout-1"></a><a class="docs-heading-anchor-permalink" href="#Calculate-Attention-Rollout" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/extractAttWeights.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">calc_att_rollout(
+    bot::ChatBot;
+    input_prompt::String = &quot;Once upon a time&quot;,
+    desired_layer_depth::Int = 1,
+    desired_head::Int = 1,
+)</code></pre><p>Example:</p><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer_depth = 3
+head = 1
+
+rollout_matrix, token_strings = calc_att_rollout(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer_depth = layer_depth,
+    desired_head = head,
+)</code></pre><p>The function returns rolled-up attention values across multiple layers.</p><h2 id="Visualize-Attention-Rollout"><a class="docs-heading-anchor" href="#Visualize-Attention-Rollout">Visualize Attention Rollout</a><a id="Visualize-Attention-Rollout-1"></a><a class="docs-heading-anchor-permalink" href="#Visualize-Attention-Rollout" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/attentionRolloutVisualizer.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">visualize_attention_rollout(
+    rollout_matrix::Array{Float32,3},
+    output_tokens::Vector{String},
+)</code></pre><p>Example:</p><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer_depth = 3
+head = 1
+
+rollout_matrix, token_strings = calc_att_rollout(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer_depth = layer_depth,
+    desired_head = head,
+)
+
+svg = visualize_attention_rollout(rollout_matrix, token_strings)
+
+open(&quot;attention_rollout.svg&quot;, &quot;w&quot;) do file
+    write(file, svg)
+end</code></pre><p>The function creates an SVG visualization for the attention rollout. Tokens are shown as dots in a layer grid. Attention strength is represented by line color and thickness.</p><h2 id="Basic-workflow-example"><a class="docs-heading-anchor" href="#Basic-workflow-example">Basic workflow example</a><a id="Basic-workflow-example-1"></a><a class="docs-heading-anchor-permalink" href="#Basic-workflow-example" title="Permalink"></a></h2><pre><code class="language-julia hljs">using TransformerXAI
+
+model_path = &quot;models/stories42M.bin&quot;
+tokenizer_path = &quot;models/tokenizer.bin&quot;
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer = 3
+layer_depth = 3
+head = 1
+
+attention_matrix, token_strings = extract_att_weights(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer = layer,
+    desired_head = head
+)
+
+heatmap_matrix = generate_attention_heatmap_matrix(
+    attention_matrix,
+    token_strings
+)
+
+heatmap = visualize_heatmap(
+    token_strings, 
+    attention_matrix    
+)
+
+open(&quot;attentionHeatmap.svg&quot;, &quot;w&quot;) do file
+    show(file, MIME(&quot;image/svg+xml&quot;), heatmap)
+end
+
+rollout_matrix, token_strings = calc_att_rollout(
+    bot;
+    input_prompt = &quot;In a small village, there was a&quot;,
+    desired_layer_depth = layer_depth,
+    desired_head = head,
+)
+
+svg = visualize_attention_rollout(rollout_matrix, token_strings)
+
+open(&quot;attention_rollout.svg&quot;, &quot;w&quot;) do file
+    write(file, svg)
+end</code></pre></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Tuesday 30 June 2026 01:21">Tuesday 30 June 2026</span>. Using Julia version 1.11.9.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
