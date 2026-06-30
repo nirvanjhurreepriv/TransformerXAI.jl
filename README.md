@@ -25,6 +25,7 @@ Start Julia, enter package mode and add the package from GitHub:
 
 ```julia
 ]
+add https://github.com/ConstantConstantin/Llama2.jl
 add https://github.com/nirvanjhurreepriv/TransformerXAI.jl
 ```
 
