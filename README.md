@@ -16,6 +16,7 @@ TransformerXAI.jl currently provides:
 * extraction of attention weights from a selected layer and head
 * generation of a basic attention heatmap matrix
 * generation of an extended token-labeled attention heatmap
+* calculation of attention rollout and visualization
 * a runnable basic example workflow
 
 ## Installation
