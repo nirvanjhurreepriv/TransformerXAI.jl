@@ -7,7 +7,7 @@
                 0.8f0  1.0f0  0.0f0  0.0f0  0.0f0;  # like
                 0.2f0  0.9f0  1.0f0  0.0f0  0.0f0;  # doing
                 0.1f0  0.1f0  0.3f0  1.0f0  0.0f0;  # my
-                0.1f0  0.2f0  0.8f0  0.9f0  1.0f0  # homework.
+                0.1f0  0.2f0  0.8f0  0.9f0  1.0f0   # homework.
             ]
             out = visualize_heatmap(tokens, attention)
 
