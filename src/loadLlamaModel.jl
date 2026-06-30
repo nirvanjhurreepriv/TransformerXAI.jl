@@ -1,5 +1,3 @@
-using Llama2
-
 """
 The function creates a Llama2 chatbot.
 
@@ -24,7 +22,7 @@ function load_llama_model(model_path, vocabulary_path)
     end
 
     # create llama model
-    bot = Llama2.ChatBot(model_path; vocabpath=vocabulary_path)
+    bot = ChatBot(model_path; vocabpath=vocabulary_path)
 
     # return object
     return bot

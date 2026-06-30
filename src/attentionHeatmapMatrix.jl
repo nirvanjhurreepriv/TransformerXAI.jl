@@ -1,5 +1,3 @@
-using Plots
-
 """
 The function creates a basic heatmap matrix
 
@@ -21,7 +19,7 @@ The function creates a basic heatmap matrix
 
     m = generate_attention_heatmap_matrix(attention_history, token_strings)
 """
-function generate_attention_heatmap_matrix(att_matrix, tokens)
+function generate_attention_heatmap_matrix(att_matrix::AbstractMatrix{<:Real}, tokens::Vector{String})
     n = length(tokens)
 
     if length(att_matrix) != n^2
