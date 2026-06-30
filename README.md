@@ -94,4 +94,4 @@ https://github.com/ConstantConstantin/Llama2.jl
 * tests for rollout calculation
 * merge of attention flow implementation + testing
 * more tests for all cases without model files
-* (more visualization of attention rollout)
+* matrix visualization of attention rollout
