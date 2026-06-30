@@ -1,4 +1,4 @@
-@testset "visualize Attention Rollout" begin
+@testset "attentionRolloutVisualizer.jl" begin
     @testset "rollout visualizer returns valid SVG" begin
         tokens = ["I", "test"]
         rollout = ones(Float32, 2, 2, 1)
