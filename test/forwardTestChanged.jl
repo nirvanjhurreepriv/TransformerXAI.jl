@@ -11,7 +11,7 @@
             pos = Int32(1)
 
             logits = Llama2.forward!(transformer, token, pos)
-            logits_changed = TransformerXAI.forward_changed!(transformer_changed, token, pos)
+            logits_changed = forward_changed!(transformer_changed, token, pos)
 
             @test logits_changed isa Vector{Float32}
             @test logits_changed == transformer_changed.state.logits
@@ -27,7 +27,7 @@
             pos = Int32(1)
 
             # set get_att == true
-            logits, attention = TransformerXAI.forward_changed!(transformer, token, pos, true)
+            logits, attention = forward_changed!(transformer, token, pos, true)
 
             @test logits isa Vector{Float32}
             @test attention isa Array{Float32, 3}

@@ -4,11 +4,11 @@
 
     if isfile(model_path) && isfile(vocab_path) 
         @testset "Check if returns are correct" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
             desired_layer_depth = 1
 
-            att_matrix, tokens = TransformerXAI.calc_att_rollout(
+            att_matrix, tokens = calc_att_rollout(
                 bot;
                 input_prompt=prompt,
                 desired_head=1,
@@ -26,11 +26,11 @@
 
         # returned tokens correct?
         @testset "Check tokens == tokeinzer output" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
             input_tokens = Llama2.encode(bot.tokenizer, prompt)
 
-            att_matrix, tokens = TransformerXAI.calc_att_rollout(
+            att_matrix, tokens = calc_att_rollout(
                 bot;
                 input_prompt=prompt,
                 desired_head=1,
@@ -65,24 +65,24 @@
 
         # wrong inputs should not be possible
         @testset "Throws errors with wrong input" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
-            @test_throws ArgumentError TransformerXAI.calc_att_rollout(
+            @test_throws ArgumentError calc_att_rollout(
                 bot;
                 desired_head=0
             )
-            @test_throws ArgumentError TransformerXAI.calc_att_rollout(
+            @test_throws ArgumentError calc_att_rollout(
                 bot;
                 desired_layer_depth=0
             )
             # Tests if the function accepts a desired head above the number of heads (8) the bot has by default
-            @test_throws ArgumentError TransformerXAI.calc_att_rollout(
+            @test_throws ArgumentError calc_att_rollout(
                 bot;
                 desired_head=9
             )
             # Tests if the function accepts a desired layer depth above the depth of 8 the bot has by default
-            @test_throws ArgumentError TransformerXAI.calc_att_rollout(
+            @test_throws ArgumentError calc_att_rollout(
                 bot;
                 desired_layer_depth=9
             )
