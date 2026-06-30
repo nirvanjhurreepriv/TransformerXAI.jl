@@ -87,3 +87,9 @@ TransformerXAI.jl currently uses the external Julia package `Llama2.jl`:
 ```text
 https://github.com/ConstantConstantin/Llama2.jl
 ```
+
+## Open TODOs / Currently in progress
+* docstrings for rollout tests
+* in general: more tests
+* merge of attention flow implementation + testing
+* more tests for all cases without model files
