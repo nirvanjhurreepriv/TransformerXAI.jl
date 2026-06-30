@@ -19,7 +19,8 @@ models/tokenizer.bin
 | **Modified text generation**      | Checks that `talktollm_changed` returns generated text and, when requested, attention history.                                                        |
 | **Attention extraction**          | Verifies returned attention matrix shape, finite values, tokenizer output, heatmap compatibility, and invalid layer/head error handling.              |
 | **Attention rollout**             | Verifies rollout matrix shape, finite values, tokenizer output, and invalid rollout depth/head error handling.                                        |
-| **Heatmap visualization**         | Tests `visualize_heatmap`, SVG output generation, SVG escaping, empty inputs, and invalid attention sizes.                                            |
+| **Heatmap visualization**         | Tests `visualize_heatmap`, SVG output generation, SVG escaping, empty inputs, and invalid attention sizes. 
+| **Heatmap matrix visualization**         | Tests `generate_heatmap_matrix`, Plot output generation, empty inputs, and invalid attention sizes.                                            |
 | **Rollout visualization**         | Tests SVG output, layer/dot/line counts, attention strength encoding, zero-attention handling, and invalid inputs.                                    |
 
 ## Running tests locally

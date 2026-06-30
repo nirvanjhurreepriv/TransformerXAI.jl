@@ -93,3 +93,4 @@ https://github.com/ConstantConstantin/Llama2.jl
 * in general: more tests
 * merge of attention flow implementation + testing
 * more tests for all cases without model files
+* tests for rollout calculation

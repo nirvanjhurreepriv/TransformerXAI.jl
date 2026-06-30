@@ -22,7 +22,7 @@ The function creates a basic heatmap matrix
 function generate_attention_heatmap_matrix(att_matrix::AbstractMatrix{<:Real}, tokens::Vector{String})
     n = length(tokens)
 
-    if length(att_matrix) != n^2
+    if size(att_matrix) != (n, n)
         throw(ArgumentError("input size mismatch"))
     end
 
