@@ -35,6 +35,19 @@ using TransformerXAI
 
 For more detailed installation instructions, see the [Getting Started Guide](docs/src/gettingStarted.md).
 
+## Model files
+
+Model and tokenizer files are not included in this repository.
+
+To run the Llama2-based examples, place the required files in the `models/` directory:
+
+```text
+models/stories42M.bin
+models/tokenizer.bin
+```
+
+An example of a model and tokenizer download can be found in the [Getting Started Guide](docs/src/gettingStarted.md).
+
 ## Basic Example
 
 A minimal workflow looks like this:

@@ -265,3 +265,46 @@ end
 ```
 
 The function creates an SVG visualization for the attention rollout. Tokens are shown as dots in a layer grid. Attention strength is represented by line color and thickness.
+
+## Basic workflow example
+```julia
+using TransformerXAI
+
+model_path = "models/stories42M.bin"
+tokenizer_path = "models/tokenizer.bin"
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+layer_depth = 3
+head = 1
+
+attention_matrix, token_strings = extract_att_weights(
+    bot;
+    input_prompt = "In a small village, there was a",
+    desired_layer = layer.
+    desired_head = head
+)
+
+heatmap_matrix = generate_attention_heatmap_matrix(
+    attention_matrix,
+    token_strings
+)
+
+heatmap = visualize_heatmap(
+    token_strings, 
+    attention_matrix    
+)
+
+rollout_matrix, token_strings = calc_att_rollout(
+    bot;
+    input_prompt = "In a small village, there was a",
+    desired_layer_depth = layer_depth,
+    desired_head = head,
+)
+
+svg = visualize_attention_rollout(rollout_matrix, token_strings)
+
+open("attention_rollout.svg", "w") do file
+    write(file, svg)
+end
+```

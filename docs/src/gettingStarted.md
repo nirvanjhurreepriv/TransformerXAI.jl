@@ -28,7 +28,18 @@ Leave package mode by pressing backspace or Ctrl+C, then load the package:
 using TransformerXAI
 ```
 
-Afterwards, all exported functions of the package can be used.
+Afterwards, all exported functions of the package can be used if a model and tokenizer are provided. 
+
+A basic model and tokenizer can be downloaded in the julia shell:
+```julia
+mkpath("models")
+
+download("https://huggingface.co/karpathy/tinyllamas/resolve/main/stories42M.bin", "models/stories42M.bin")
+"stories42M.bin"
+
+download("https://raw.githubusercontent.com/karpathy/llama2.c/b4bb47bb7baf0a5fb98a131d80b4e1a84ad72597/tokenizer.bin", "models/tokenizer.bin")
+"tokenizer.bin"
+```
 
 For an overview of the available functionality, see the [Functionality Guide](functionality.md).
 
