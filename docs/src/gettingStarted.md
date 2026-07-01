@@ -38,16 +38,35 @@ Afterwards, all exported functions of the package can be used if a model and tok
 
 A basic model and tokenizer can be downloaded in the julia shell:
 ```julia
+using Downloads
+
 mkpath("models")
 
-download("https://huggingface.co/karpathy/tinyllamas/resolve/main/stories42M.bin", "models/stories42M.bin")
-"stories42M.bin"
+model_path = joinpath("models", "stories42M.bin")
+model_url = "https://huggingface.co/karpathy/tinyllamas/resolve/main/stories42M.bin"
 
-download("https://raw.githubusercontent.com/karpathy/llama2.c/b4bb47bb7baf0a5fb98a131d80b4e1a84ad72597/tokenizer.bin", "models/tokenizer.bin")
-"tokenizer.bin"
+tokenizer_path = joinpath("models", "tokenizer.bin")
+tokenizer_url = "https://raw.githubusercontent.com/karpathy/llama2.c/b4bb47bb7baf0a5fb98a131d80b4e1a84ad72597/tokenizer.bin"
+
+Downloads.download(model_url, model_path)
+Downloads.download(tokenizer_url, tokenizer_path)
 ```
 
-For an overview of the available functionality, see the [Functionality Guide](functionality.md).
+### Basic Example
+```julia
+using TransformerXAI
+
+bot = bot = load_llama_model("models/stories42M.bin", "models/tokenizer.bin")
+
+attention, tokens = extract_att_weights(bot)
+
+heatmap_matrix = generate_attention_heatmap_matrix(
+    attention,
+    tokens
+)
+```
+
+For an overview of all available functionality, see the [Functionality Guide](https://nirvanjhurreepriv.github.io/TransformerXAI.jl/dev/functionality/).
 
 ## Installation as Developer
 
@@ -83,7 +102,7 @@ Leave the Julia shell:
 exit()
 ```
 
-### For developers: Running the Basic Example
+### Running the Basic Example
 
 The repository contains a basic runnable example:
 

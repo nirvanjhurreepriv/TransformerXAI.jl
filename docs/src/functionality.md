@@ -125,6 +125,8 @@ heatmap_matrix = generate_attention_heatmap_matrix(
     attention_matrix,
     token_strings
 )
+
+display(heatmap_matrix)
 ```
 
 The function creates a basic attention heatmap matrix from the extracted attention weights and the corresponding tokens.

@@ -29,7 +29,7 @@ add https://github.com/ConstantConstantin/Llama2.jl
 add https://github.com/nirvanjhurreepriv/TransformerXAI.jl
 ```
 
-Then load the package:
+Then exit the package mode and load the package:
 
 ```julia
 using TransformerXAI
