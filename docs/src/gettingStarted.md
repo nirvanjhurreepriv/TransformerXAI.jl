@@ -34,23 +34,7 @@ Leave package mode by pressing backspace or Ctrl+C, then load the package:
 using TransformerXAI
 ```
 
-Afterwards, all exported functions of the package can be used if a model and tokenizer are provided. 
-
-A basic model and tokenizer can be downloaded in the julia shell:
-```julia
-using Downloads
-
-mkpath("models")
-
-model_path = joinpath("models", "stories42M.bin")
-model_url = "https://huggingface.co/karpathy/tinyllamas/resolve/main/stories42M.bin"
-
-tokenizer_path = joinpath("models", "tokenizer.bin")
-tokenizer_url = "https://raw.githubusercontent.com/karpathy/llama2.c/b4bb47bb7baf0a5fb98a131d80b4e1a84ad72597/tokenizer.bin"
-
-Downloads.download(model_url, model_path)
-Downloads.download(tokenizer_url, tokenizer_path)
-```
+Afterwards, all exported functions of the package can be used if a model and tokenizer are provided. See the [Download a Model](#download-a-model) Section for more information.
 
 ### Basic Example
 ```julia
@@ -96,19 +80,15 @@ instantiate
 precompile
 ```
 
-Leave the Julia shell:
-
-```julia
-exit()
-```
-
-### Running the Basic Example
+### Basic Example
 
 The repository contains a basic runnable example:
 
 ```text
 examples/basicExample.jl
 ```
+To run the example a model and tokenizer have to be available in the `models` folder. See the [Download a Model](#download-a-model) Section for more information.
+
 Run the example from the project root:
 
 ```bash
@@ -116,6 +96,24 @@ julia --project=. examples/basicExample.jl
 ```
 
 The example loads a Llama2-compatible model, extracts attention weights from a selected layer and creates attention heatmap visualizations.
+
+## Download a Model
+
+A basic model and tokenizer can be downloaded in the julia shell:
+```julia
+using Downloads
+
+mkpath("models")
+
+model_path = joinpath("models", "stories42M.bin")
+model_url = "https://huggingface.co/karpathy/tinyllamas/resolve/main/stories42M.bin"
+
+tokenizer_path = joinpath("models", "tokenizer.bin")
+tokenizer_url = "https://raw.githubusercontent.com/karpathy/llama2.c/b4bb47bb7baf0a5fb98a131d80b4e1a84ad72597/tokenizer.bin"
+
+Downloads.download(model_url, model_path)
+Downloads.download(tokenizer_url, tokenizer_path)
+```
 
 ## External Dependency: Llama2.jl
 
