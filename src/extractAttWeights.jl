@@ -272,6 +272,39 @@ function get_att_matrix(bot::ChatBot; input_prompt::String="Once upon a time")
 end
 
 """
+    _extract_att_weights_from_history(attention_history::Array{Float32,4}, output_tokens_strings::Vector{String}, desired_layer::Int=1, desired_head::Int=1)
+
+This function is only needed to test the maximum of the get_att_weights function without model and tokenizer
+
+# Arguments:
+- `attention_history::Array{Float32,4}` : contains the generated attention values (after softmax)
+- `output_tokens_strings::Vector{Float32, 4}` : contains the individual tokens from input_prompt as separate strings. Useful for visualisation purposes.
+- `desired_layer::Int` : The layer from which the attention should be returned
+- `desired_head::Int` : The attention head from which the attention should be returned
+
+# Returns:
+- `attention_history::Matrix{Float32}` : contains the generated attention values (after softmax) in the form
+"""
+function _extract_att_weights_from_history(attention_history::Array{Float32,4}, output_tokens_strings::Vector{String}, desired_layer::Int=1, desired_head::Int=1)
+    # Safety Checks
+    (desired_layer > 0) || throw(ArgumentError("desired_layer needs to be larger than 0"))
+    (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
+
+    length_of_input = length(encode(bot.tokenizer, input_prompt))
+    (length_of_input > 0) || throw(ArgumentError("input_prompt must contain more than $length_of_input tokens in the form of a string."))
+
+    n_heads = size(attention_history, 2)
+    n_layers = size(attention_history, 3)
+
+    !(desired_layer > n_layers) || throw(ArgumentError("desired_layer can't be larger than the number of layers, which is $n_layers. desired_layer = $desired_layer."))
+    !(desired_head > n_heads) || throw(ArgumentError("desired_head can't be larger than the number of heads, which is $n_heads. desired_head = $desired_head."))
+
+    return attention_history[:, desired_head, desired_layer, :], output_tokens_strings;
+
+end
+
+
+"""
     extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Int=1, desired_head::Int=1)
 
 Calls a modified version of talktollm from Llama2.jl to collect attention weights.
@@ -300,13 +333,16 @@ function extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a tim
     !(desired_head > bot.transformer.config.n_heads) || throw(ArgumentError("desired_head can't be larger than bot.transformer.config.n_heads, which is $(bot.transformer.config.n_heads). desired_head = $desired_head."))
 
     attention_history, output_tokens_strings = get_att_matrix(bot, input_prompt = input_prompt);
-    
-
 
     # Restructure the attention matrix into a Vector, since that is what the visualize_heatmap function takes as a parameter.
     #attention_vector = reshape(attention_history[:,desired_head,desired_layer,:],length_of_input^2);
     #return attention_vector, output_tokens_strings;
-    return attention_history[:, desired_head, desired_layer, :], output_tokens_strings;
+    return _extract_att_weights_from_history(
+        attention_history,
+        output_tokens_strings;
+        desired_layer=desired_layer,
+        desired_head=desired_head
+    )
 end
 
 

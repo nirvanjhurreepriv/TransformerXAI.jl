@@ -85,6 +85,109 @@
             )
         end
 
-    end
+    else    
+        # bare minimum tests for test run without model and tokenizer
+        
+        # basic case -> everything should be fine
+        @testset "Returns are correct - without model" begin
+            tokens = ["I", "really", "like", "dogs"]
+            attention_history = zeros(Float32, 4, 2, 2, 4)
+            
+            exp = Float32[
+                1.0 0.2 0.3 0.4;
+                0.0 0.8 0.1 0.2;
+                0.0 0.0 0.7 0.3;
+                0.0 0.0 0.0 0.9
+            ]
+            attention_history[:, 1, 1, :] = exp
 
+            att_matrix, r_tokens = TransformerXAI._extract_att_weights_from_history(
+                attention_history,
+                tokens;
+                desired_head=1,
+                desired_layer=1
+            )
+
+            exp_shape = zeros(Float32, length(tokens), length(tokens))
+
+            @test att_matrix isa Array{Float32,2}
+            @test all(isfinite, att_matrix)
+            @test !isempty(r_tokens)
+            @test r_tokens isa Vector{String}
+            @test size(exp_shape) == size(att_matrix)
+            @test att_matrix == exp
+        end
+
+        # wrong inputs should not be possible
+        @testset "Throws errors with wrong input - without model" begin
+            tokens = ["I", "really", "like", "dogs"]
+            attention_history = zeros(Float32, 4, 2, 2, 4)
+            
+            @test_throws ArgumentError TransformerXAI._extract_att_weights_from_history(
+                attention_history, 
+                tokens;
+                desired_head=0
+            )
+            @test_throws ArgumentError TransformerXAI._extract_att_weights_from_history(
+                attention_history, 
+                tokens;
+                desired_layer=0
+            )
+
+            # Tests if the function accepts a desired head above the number of heads (2) the bot has by default
+            @test_throws ArgumentError TransformerXAI._extract_att_weights_from_history(
+                attention_history, 
+                tokens;
+                desired_head=3
+            )
+
+            # Tests if the function accepts a desired layer above the depth of 2 the bot has by default
+            @test_throws ArgumentError TransformerXAI._extract_att_weights_from_history(
+                attention_history, 
+                tokens;
+                desired_layer=3
+            )
+        end
+
+        # returned tokens correct?
+        @testset "Check tokens == tokeinzer output - without model" begin
+            tokens = ["I", "really", "like", "dogs"]
+            attention_history = zeros(Float32, 4, 2, 2, 4)
+
+            att_matrix, r_tokens = TransformerXAI._extract_att_weights_from_history(
+                attention_history,
+                tokens;
+                desired_head=1,
+                desired_layer=1
+            )
+            
+            @test tokens == r_tokens
+        end
+
+        # can we build heatmap with extract attention returns? 
+        @testset "Check if heatmap can be built - without model" begin
+            tokens = ["I", "really", "like", "dogs"]
+            attention_history = zeros(Float32, 4, 2, 2, 4)
+            
+            exp = Float32[
+                1.0 0.2 0.3 0.4;
+                0.0 0.8 0.1 0.2;
+                0.0 0.0 0.7 0.3;
+                0.0 0.0 0.0 0.9
+            ]
+            attention_history[:, 1, 1, :] = exp
+
+            att_matrix, r_tokens = TransformerXAI._extract_att_weights_from_history(
+                attention_history,
+                tokens;
+                desired_head=1,
+                desired_layer=1
+            )
+
+            heatmap = visualize_heatmap(r_tokens, att_matrix)
+        
+            @test heatmap isa AttentionHeatmap
+            @test size(heatmap.attention) == (length(r_tokens), length(r_tokens))
+        end
+    end
 end
