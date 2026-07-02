@@ -13,12 +13,8 @@ The function creates a Llama2 chatbot.
 """
 function load_llama_model(model_path, vocabulary_path)
     # check if model file exists
-    if !isfile(model_path)
-        throw(ArgumentError("model path does not exist"))
-    end
-
-    if !isfile(vocabulary_path)
-        throw(ArgumentError("vocabulary path does not exist"))
+    if !isfile(model_path) || !isfile(vocabulary_path)
+        throw(ArgumentError("model path or vocabulary path does not exist"))
     end
 
     # create llama model
