@@ -290,7 +290,7 @@ function _extract_att_weights_from_history(attention_history::Array{Float32,4}, 
     (desired_layer > 0) || throw(ArgumentError("desired_layer needs to be larger than 0"))
     (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
 
-    length_of_input = length(encode(bot.tokenizer, input_prompt))
+    length_of_input = length(output_tokens_strings)
     (length_of_input > 0) || throw(ArgumentError("input_prompt must contain more than $length_of_input tokens in the form of a string."))
 
     n_heads = size(attention_history, 2)
