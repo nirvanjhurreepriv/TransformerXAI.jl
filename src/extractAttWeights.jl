@@ -285,7 +285,7 @@ This function is only needed to test the maximum of the get_att_weights function
 # Returns:
 - `attention_history::Matrix{Float32}` : contains the generated attention values (after softmax) in the form
 """
-function _extract_att_weights_from_history(attention_history::Array{Float32,4}, output_tokens_strings::Vector{String}, desired_layer::Int=1, desired_head::Int=1)
+function _extract_att_weights_from_history(attention_history::Array{Float32,4}, output_tokens_strings::Vector{String}; desired_layer::Int=1, desired_head::Int=1)
     # Safety Checks
     (desired_layer > 0) || throw(ArgumentError("desired_layer needs to be larger than 0"))
     (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
