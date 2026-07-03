@@ -32,3 +32,14 @@ Tool: Claude Code (claude-sonnet-4-6)
 - Committed and pushed the changes
 
 **Files changed:** `.github/workflows/ci.yml`, `Project.toml`
+
+## CI fix: Julia version mismatch and merge conflict resolution (Nirvan)
+Tool: Claude Code (claude-sonnet-4-6) + Claude.ai (claude-sonnet-4-6)
+
+**What the LLM did:**
+- Fixed corrupted local Julia cache and switched to Julia 1.12.6 to match Manifest
+- Updated `ci.yml` to use Julia '1.12' in both test and docs jobs
+- Resolved 4-way merge conflict between `attention_flow` and `origin/main`
+- Regenerated `Manifest.toml` on Julia 1.12.6 to fix stale manifest CI failure
+
+**Files changed:** `Manifest.toml`, `.github/workflows/ci.yml`, `src/TransformerXAI.jl`, `test/runtests.jl`
