@@ -1,11 +1,5 @@
 # This file contains two functions from the Llama2.jl project which have been slightly modified, to allow the extraction of attention.
 
-using LinearAlgebra: dot
-using StatsBase: wsample
-using Llama2: Config, ChatBot, Transformer, rmsnorm, Tokenizer, encode, softmax!
-
-
-
 """
 This is mostly a copy of the "forward!" function from https://github.com/ConstantConstantin/Llama2.jl/blob/main/src/forward.jl. Modified to allow accessing the attention which the original function does not permit.
 
@@ -139,10 +133,6 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
 end
 
 
-
-
-
-
 """
 This is mostly a copy of the "talktollm" function from https://github.com/ConstantConstantin/Llama2.jl/blob/main/src/talk.jl. Modified to allow accessing the attention which the original function does not permit.
 
@@ -162,14 +152,23 @@ This is mostly a copy of the "talktollm" function from https://github.com/Consta
 - `String`: The generated text.
 - #### Added: If get_att, also returns an object containing the attention used during the text creation.
 """
-function talktollm_changed(bot::ChatBot; prompt::String = "", max_tokens::Int=255, verbose::Bool = false, temperature::Union{Nothing, Float32} = nothing, topp::Float32 = 1.1f0, get_att::Bool = false)
+function talktollm_changed(
+    bot::ChatBot; 
+    prompt::String = "", 
+    max_tokens::Int=255, 
+    verbose::Bool = false, 
+    temperature::Float32 = 0.0f0, 
+    topp::Float32 = 1.1f0, 
+    get_att::Bool = false
+)
 
     #### Not using the modelpath anymore, since this is cumbersome if analysing a specific bot.
     transformer = bot.transformer
     tok = bot.tokenizer
 
-    if temperature !== nothing
-        sampler = Sampler(transformer.config.vocab_size, temperature, topp, 1234)
+    if temperature > 0.0f0
+        seed = rand(1:typemax(Int32))
+        sampler = Sampler(transformer.config.vocab_size, temperature, topp, seed)
     end
 
     input_tokens = encode(tok, prompt)
@@ -206,7 +205,7 @@ function talktollm_changed(bot::ChatBot; prompt::String = "", max_tokens::Int=25
         if pos < n_input_tokens
             next = input_tokens[pos + 1]
         else
-            if temperature === nothing
+            if temperature == 0.0f0
                 softmax!(logits)
                 next = wsample(logits)
             else
@@ -229,8 +228,6 @@ function talktollm_changed(bot::ChatBot; prompt::String = "", max_tokens::Int=25
 
     return string(broadcast(x -> tok.vocab[x], result)...)
 end
-
-
 
 
 """
@@ -284,10 +281,10 @@ Calling this function does not generate new text, so the text inside output_toke
 - `bot::ChatBot` : Model type from Llama2.jl
 - `input_prompt::String` : Text for which attention should be generated
 - `desired_layer::Int` : The layer from which the attention should be returned
-- `desired_layer::Int` : The attentionhead from which the attention should be returned
+- `desired_head::Int` : The attention head from which the attention should be returned
 
 # Returns: 
-- `attention_vector::Vector{Float32}` : contains the generated attention values (after softmax)
+- `attention_history::Matrix{Float32}` : contains the generated attention values (after softmax) in the form
 - `output_tokens_strings::Vector{String}` : contains the individual tokens from input_prompt as separate strings.
 """
 function extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Int=1, desired_head::Int=1)
@@ -330,7 +327,7 @@ Calling this function does not generate new text, so the text inside output_toke
 - `bot::ChatBot` : Model type from Llama2.jl
 - `input_prompt::String` : Text for which attention should be generated (doesn't generate new text)
 - `desired_layer_depth::Int` : The layer up to which the attention should be rolled up (starting at the first layer)
-- `desired_layer::Int` : The attentionhead from which the attention should be returned
+- `desired_head::Int` : The attention head from which the attention should be returned
 
 # Returns: 
 - `rollout_matrix::Array{Float32,3}` : contains the generated and rolled up attention values. Shape: 

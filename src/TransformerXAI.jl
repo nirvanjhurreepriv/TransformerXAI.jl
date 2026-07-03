@@ -1,13 +1,19 @@
 module TransformerXAI
 
+# Imports
+using LinearAlgebra: dot
+using StatsBase: wsample
+using Llama2: ChatBot, Transformer, rmsnorm, Sampler, encode, softmax!
+using Plots: heatmap
 
 # Export the public API so tests can see these functions
-export 
-    load_llama_model, 
-    extract_att_weights, 
-    AttentionHeatmap, 
+export
+    load_llama_model,
+    extract_att_weights,
+    AttentionHeatmap,
     visualize_heatmap,
     generate_attention_heatmap_matrix,
+    calc_att_rollout,
     visualize_attention_rollout,
     attention_flow
 
@@ -20,4 +26,4 @@ include("attentionRolloutVisualizer.jl")
 include("../examples/basicExample.jl")
 include("attentionFlow.jl")
 
-end # module
+end # end module

@@ -6,7 +6,7 @@ using TransformerXAI
     @testset "Module Structure" begin
         @test TransformerXAI isa Module
     end
-    
+
     @testset "Visualization Type Exists" begin
         # Just test that the type is defined (doesn't require function calls)
         @test isdefined(TransformerXAI, :AttentionHeatmap)
@@ -26,4 +26,5 @@ using TransformerXAI
     include("visualizeHeatmapTest.jl")
     include("rolloutVisualizerTest.jl")
     include("attentionFlowTest.jl")
+    include("heatmapMatrixTest.jl")
 end

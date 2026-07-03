@@ -4,10 +4,10 @@
 
     if isfile(model_path) && isfile(vocab_path) 
         @testset "Check if returns are correct" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
-            att_matrix, tokens = TransformerXAI.extract_att_weights(
+            att_matrix, tokens = extract_att_weights(
                 bot;
                 input_prompt=prompt,
                 desired_head=1,
@@ -25,11 +25,11 @@
 
         # returned tokens correct?
         @testset "Check tokens == tokeinzer output" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
             input_tokens = Llama2.encode(bot.tokenizer, prompt)
 
-            att_matrix, tokens = TransformerXAI.extract_att_weights(
+            att_matrix, tokens = extract_att_weights(
                 bot;
                 input_prompt=prompt,
                 desired_head=1,
@@ -43,43 +43,43 @@
 
         # can we build heatmap with extract attention returns? 
         @testset "Check if heatmap can be built" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
             input_tokens = Llama2.encode(bot.tokenizer, prompt)
 
-            att_matrix, tokens = TransformerXAI.extract_att_weights(
+            att_matrix, tokens = extract_att_weights(
                 bot;
                 input_prompt=prompt,
                 desired_head=1,
                 desired_layer=1
             )
 
-            heatmap = TransformerXAI.visualize_heatmap(tokens, att_matrix)
+            heatmap = visualize_heatmap(tokens, att_matrix)
         
-            @test heatmap isa TransformerXAI.AttentionHeatmap
+            @test heatmap isa AttentionHeatmap
             @test size(heatmap.attention) == (length(tokens), length(tokens))
         end
 
         # wrong inputs should not be possible
         @testset "Throws errors with wrong input" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
-            @test_throws ArgumentError TransformerXAI.extract_att_weights(
+            @test_throws ArgumentError extract_att_weights(
                 bot;
                 desired_head=0
             )
-            @test_throws ArgumentError TransformerXAI.extract_att_weights(
+            @test_throws ArgumentError extract_att_weights(
                 bot;
                 desired_layer=0
             )
             # Tests if the function accepts a desired head above the number of heads (8) the bot has by default
-            @test_throws ArgumentError TransformerXAI.extract_att_weights(
+            @test_throws ArgumentError extract_att_weights(
                 bot;
                 desired_head=9
             )
             # Tests if the function accepts a desired layer above the depth of 8 the bot has by default
-            @test_throws ArgumentError TransformerXAI.extract_att_weights(
+            @test_throws ArgumentError extract_att_weights(
                 bot;
                 desired_layer=9
             )

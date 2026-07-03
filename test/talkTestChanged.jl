@@ -5,7 +5,7 @@
     if isfile(model_path) && isfile(vocab_path)
         # check get_att false -> same behaviour as llama2 function
         @testset "Check get_att == false" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
             out = TransformerXAI.talktollm_changed(
@@ -20,7 +20,7 @@
 
         # check get_att true 
         @testset "Check get_att == true" begin
-            bot = TransformerXAI.load_llama_model(model_path, vocab_path)
+            bot = load_llama_model(model_path, vocab_path)
             prompt = "Once upon a time in a small town"
 
             out, att_history = TransformerXAI.talktollm_changed(
