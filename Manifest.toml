@@ -2,7 +2,7 @@
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "dcaec7b998279e241928397413b4d2dd3922bed6"
+project_hash = "b0937a099f0fb0790a974e9183e5dd2aac708c0e"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -815,7 +815,7 @@ uuid = "3bb67fe8-82b1-5028-8e26-92a6c54297fa"
 version = "0.11.3"
 
 [[deps.TransformerXAI]]
-deps = ["LinearAlgebra", "Llama2", "Plots", "StatsBase"]
+deps = ["LinearAlgebra", "Llama2", "Plots", "Statistics", "StatsBase"]
 path = "."
 uuid = "760f204d-c9d5-47fc-8112-97e58fae4ca6"
 version = "0.1.0"

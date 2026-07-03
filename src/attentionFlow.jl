@@ -39,12 +39,8 @@ end
 
 # Single max-flow computation between source and sink
 function max_flow(capacities, source, sink)
-    # returns the flow matrix
     capacities = copy(capacities)
-    total_flow = 0.0
-    #max_flow = 0.0
-    found_any_path = false
-
+    total_flow = 0.0f0
 
     while true
         path = bfs_path(capacities, source, sink)
@@ -52,7 +48,6 @@ function max_flow(capacities, source, sink)
         if path === nothing
             break
         end
-        found_any_path = true
         bottleneck = minimum(capacities[path[i], path[i+1]]
                             for i in 1:length(path)-1)
 
@@ -70,10 +65,8 @@ end
 
 function adjusted_attention(attention_history::Array{Float32,4}, layer::Int, n_tokens::Int)
     # Paper: A = 0.5 * W_att + 0.5 * I, then re-normalize rows to sum to 1.
-    # Average over all heads for layers below the layer of interest (single-head assumption).
     # attention_history dims: [source_pos, head, layer, affected_pos]
-    n_heads = size(attention_history, 2)
-    
+
     # Average over all heads
     W = mean(attention_history[:, :, layer, :], dims=2)[:, 1, :] # (n_tokens × n_tokens)
     #Transpose
@@ -124,11 +117,7 @@ function attention_flow(bot::ChatBot; input_prompt::String="Once upon a time", s
     n_tokens = length(output_tokens_strings)
     n_layers = bot.transformer.config.n_layers
 
-    # Debugging
-    #@show typeof(n_tokens)
-    #@show typeof(n_layers)
-    #@show n_tokens
-    #@show n_layers
+    (source_pos >= 1 && source_pos <= n_tokens) || throw(ArgumentError("source_pos must be in 1:$n_tokens, got $source_pos"))
 
     capacity = build_capacity_graph(attention_history, n_tokens, n_layers)
 
