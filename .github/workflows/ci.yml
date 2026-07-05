@@ -37,6 +37,15 @@ jobs:
           arch: ${{ matrix.arch }}
       - uses: julia-actions/cache@v3
       - uses: julia-actions/julia-buildpkg@v1
+      - name: Cache model files
+        uses: actions/cache@v4
+        id: model-cache
+        with:
+          path: models
+          key: llama2-stories42M-tokenizer-v1
+      - name: Download model files
+        if: steps.model-cache.outputs.cache-hit != 'true'
+        run: julia --project=. scripts/downloadModel.jl
       - uses: julia-actions/julia-runtest@v1
         with:
           coverage: true
