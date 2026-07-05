@@ -32,3 +32,29 @@ Tool: Claude Code (claude-sonnet-4-6)
 - Committed and pushed the changes
 
 **Files changed:** `.github/workflows/ci.yml`, `Project.toml`
+
+## CI fix: Julia version mismatch and merge conflict resolution (Nirvan)
+Tool: Claude Code (claude-sonnet-4-6) + Claude.ai (claude-sonnet-4-6)
+
+**What the LLM did:**
+- Fixed corrupted local Julia cache and switched to Julia 1.12.6 to match Manifest
+- Updated `ci.yml` to use Julia '1.12' in both test and docs jobs
+- Resolved 4-way merge conflict between `attention_flow` and `origin/main`
+- Regenerated `Manifest.toml` on Julia 1.12.6 to fix stale manifest CI failure
+
+**Files changed:** `Manifest.toml`, `.github/workflows/ci.yml`, `src/TransformerXAI.jl`, `test/runtests.jl`
+
+## Fix docs/Manifest.toml Julia version mismatch causing Pages deployment failure (Nirvan)
+Tool: Claude Code (claude-sonnet-4-6) + Claude.ai (claude-sonnet-4-6)
+
+**What was asked:** GitHub Pages deployment started failing after the attention_flow branch was merged into main. Fix it.
+
+**What the LLM did:**
+- Inspected docs/Manifest.toml and found julia_version = "1.11.9" while CI runs Julia 1.12.6
+- Ran Pkg.resolve() and Pkg.instantiate() to regenerate docs/Manifest.toml for Julia 1.12.6
+- Confirmed docs build passes locally with julia --project=docs docs/make.jl
+- Committed and pushed the updated docs/Manifest.toml to main
+
+**Root cause:** The attention_flow merge introduced new dependencies. The stale docs/Manifest.toml pinned to Julia 1.11.9 caused Pkg.instantiate() to fail in CI, breaking the Pages deployment.
+
+**Files changed:** `docs/Manifest.toml`
