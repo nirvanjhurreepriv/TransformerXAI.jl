@@ -35,7 +35,9 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
     
     #### Addition: Defining "att" outside the for-loops allows returning it afterwards
     #### It naturally needs additional dimensions to hold the additional information
-    att = zeros(Float32, pos, config.n_heads, config.n_layers)
+    if get_att
+        att = zeros(Float32, pos, config.n_heads, config.n_layers)
+    end
 
     for l in 1:config.n_layers
 
@@ -77,7 +79,11 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
             q_head = @view q[((h - 1) * head_size + 1):(h  * head_size)]
             #### Removed local definition of "att"
             ####att = Vector{Float32}(undef, pos)
-            attention = @view att[:,h,l]
+            if get_att
+                attention = @view att[:,h,l]
+            else
+                attention = Vector{Float32}(undef, pos)
+            end
 
             for t in 1:pos
 
@@ -98,7 +104,7 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
                 v = @view state.value_cache[l, t, (div(h - 1, kv_mul) * head_size + 1):((div(h - 1, kv_mul) + 1) * head_size)]
                 
                 #### Added iterators    
-                xb_head .+= att[t,h,l] * v
+                xb_head .+= attention[t] * v
 
             end
 

@@ -1,3 +1,4 @@
+using Plots
 using TransformerXAI
 #=
 Basic usage
@@ -31,19 +32,41 @@ function run_basic_example(; output_path=joinpath(pwd(), "examples"))
     output_file_matrix = joinpath(output_path, "attentionHeatmapMatrix.svg")
     Plots.savefig(heatmap_matrix, output_file_matrix)
 
+    println("Heatmap Matrix saved to: $output_file_matrix")
+
     #=
     Usage of extended heat map plot
     =#
     heatmap = visualize_heatmap(tokens, attention_weights)
 
     # A terminal cannot display SVG images, so save the heatmap to a file.
-    output_file = joinpath(output_path, "attentionHeatmap.svg")
-    open(output_file, "w") do file
+    output_file_heatmap = joinpath(output_path, "attentionHeatmap.svg")
+    open(output_file_heatmap, "w") do file
         show(file, MIME("image/svg+xml"), heatmap)
     end
 
     println("Heatmap saved to: $output_file")
-    return output_file
+
+    #=
+    Usage of Attention Rollout
+    =#
+    rollout_matrix, output_tokens = calc_att_rollout(bot)
+
+    rollout_visualization = visualize_attention_rollout(rollout_matrix, output_tokens)
+    
+    output_file_rollout = joinpath(output_path, "attentionRollout.svg")
+    open(output_file_rollout, "w") do file
+        show(file, MIME("image/svg+xml"), rollout_visualization)
+    end
+
+    #=
+    Usage of Attention Flow
+    =#
+    attention_flow_vals, flow_tokens = attention_flow(bot)
+
+    print("Attention Flow: ", attention_flow)
+    print("Attention Flow Tokens: ", flow_tokens)
+    
 end
 
 if abspath(PROGRAM_FILE) == abspath(@__FILE__)

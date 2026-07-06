@@ -23,7 +23,6 @@ include("extractAttWeights.jl")
 include("attentionHeatmapExpanded.jl")
 include("attentionHeatmapMatrix.jl")
 include("attentionRolloutVisualizer.jl")
-include("../examples/basicExample.jl")
 include("attentionFlow.jl")
 
 end # end module
