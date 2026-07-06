@@ -22,7 +22,7 @@ head = 1
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = &quot;In a small village, there was a&quot;,
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )</code></pre><p>The function returns the attention weights for the selected layer and head, together with the tokenized input prompt.</p><p>The returned <code>token_strings</code> represent the same semantic text as the input prompt, but split according to the tokenizer of the loaded model.</p><h2 id="Generate-a-Basic-Attention-Heatmap-Matrix"><a class="docs-heading-anchor" href="#Generate-a-Basic-Attention-Heatmap-Matrix">Generate a Basic Attention Heatmap Matrix</a><a id="Generate-a-Basic-Attention-Heatmap-Matrix-1"></a><a class="docs-heading-anchor-permalink" href="#Generate-a-Basic-Attention-Heatmap-Matrix" title="Permalink"></a></h2><p>Source file:</p><pre><code class="language-text hljs">src/attentionHeatmapMatrix.jl</code></pre><p>Main function:</p><pre><code class="language-julia hljs">generate_attention_heatmap_matrix(
     att_matrix::Matrix{&lt;:Real}, 
@@ -40,7 +40,7 @@ head = 1
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = &quot;In a small village, there was a&quot;,
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )
 
@@ -65,7 +65,7 @@ head = 1
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = &quot;In a small village, there was a&quot;,
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )
 
@@ -159,4 +159,4 @@ svg = visualize_attention_rollout(rollout_matrix, token_strings)
 
 open(&quot;attention_rollout.svg&quot;, &quot;w&quot;) do file
     write(file, svg)
-end</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../gettingStarted/">« Getting Started</a><a class="docs-footer-nextpage" href="../api/">API Reference »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Sunday 5 July 2026 15:36">Sunday 5 July 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+end</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../gettingStarted/">« Getting Started</a><a class="docs-footer-nextpage" href="../api/">API Reference »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 6 July 2026 12:02">Monday 6 July 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
