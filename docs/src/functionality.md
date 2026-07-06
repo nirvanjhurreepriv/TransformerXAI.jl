@@ -75,7 +75,7 @@ head = 1
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = "In a small village, there was a",
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )
 ```
@@ -117,7 +117,7 @@ head = 1
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = "In a small village, there was a",
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )
 
@@ -164,7 +164,7 @@ head = 1
 attention_matrix, token_strings = extract_att_weights(
     bot;
     input_prompt = "In a small village, there was a",
-    desired_layer = layer.
+    desired_layer = layer,
     desired_head = head
 )
 

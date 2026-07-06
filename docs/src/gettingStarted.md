@@ -40,7 +40,7 @@ Afterwards, all exported functions of the package can be used if a model and tok
 ```julia
 using TransformerXAI
 
-bot = bot = load_llama_model("models/stories42M.bin", "models/tokenizer.bin")
+bot = load_llama_model("models/stories42M.bin", "models/tokenizer.bin")
 
 attention, tokens = extract_att_weights(bot)
 
