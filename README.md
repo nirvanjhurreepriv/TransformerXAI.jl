@@ -94,6 +94,4 @@ https://github.com/ConstantConstantin/Llama2.jl
 ```
 
 ## Open TODOs / Currently in progress
-* docstrings for rollout visualization tests
 * tests for rollout calculation
-* matrix visualization of attention rollout
