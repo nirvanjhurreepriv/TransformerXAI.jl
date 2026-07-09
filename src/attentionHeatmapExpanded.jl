@@ -7,7 +7,7 @@ struct AttentionHeatmap{T<:Real}
 end
 
 """
-    visualize_heatmap(tokens::Vector{String}, attention::Array{Float32,2})
+    visualize_heatmap(tokens::AbstractVector{String}, attention::AbstractMatrix{<:Real,2})
 
 Create an attention-flow heatmap for `tokens`.
 
@@ -23,8 +23,8 @@ order is `[1->1, 1->2, 2->1, 2->2]`.
 The function returns an attention heatmap that can be plotted afterwards
 """
 function visualize_heatmap(
-    tokens::Vector{String},
-    attention::Array{Float32,2},
+    tokens::AbstractVector{String},
+    attention::AbstractMatrix{<:Real},
 )
     number_of_tokens = length(tokens)
     expected_values = number_of_tokens * number_of_tokens

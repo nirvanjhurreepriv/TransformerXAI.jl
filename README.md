@@ -8,6 +8,9 @@ TransformerXAI.jl is a Julia package for basic transformer interpretability expe
 
 The package currently focuses on loading Llama2-compatible models, extracting attention weights and visualizing attention patterns.
 
+## What are Attention Weights? 
+Many modern LLMs have a Transformer Architecture and use attention to process relationships between tokens. During the processing of tokens in the forward pass attention weights are produced inside the transformer. Our goal is to extract those attention weights and visualize them, as well as their attention rollout and attention flow to get a better understanding of how the model interprets the tokens relationships.
+
 ## Features
 
 TransformerXAI.jl currently provides:

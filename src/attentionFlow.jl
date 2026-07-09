@@ -3,7 +3,7 @@ using Statistics: mean
 using LinearAlgebra: I
 
 """
-    bfs_path(capacities, source, sink)
+    bfs_path(capacities::AbstractMatrix{<:Real}, source::Integer, sink::Integer)
 
 This helper function was taken from geeksforgeeks and is used to find an augmenting path from a source node to a sink node
 
@@ -19,7 +19,7 @@ Url: https://www.geeksforgeeks.org/python/python-program-for-breadth-first-searc
 If no path exists the return will be `nothing`
 
 """
-function bfs_path(capacities, source, sink)
+function bfs_path(capacities::AbstractMatrix{<:Real}, source::Integer, sink::Integer)
     # returns the path as a vector of node indices, or nothing if no path exists
     n = size(capacities, 1)
     parent = zeros(Int, n)
@@ -53,7 +53,7 @@ end
 
 
 """
-    max_flow(capacities, source, sink)
+    max_flow(capacities::AbstractMatrix{<:Real}, source::Integer, sink::Integer)
 
 This function computes the single max flow between a source and sink
 It repeatedly searches for augmenting paths and updates the capacities until no more paths are found
@@ -67,7 +67,7 @@ It repeatedly searches for augmenting paths and updates the capacities until no 
 The function returns the maximum flow between source and sink
 
 """
-function max_flow(capacities, source, sink)
+function max_flow(capacities::AbstractMatrix{<:Real}, source::Integer, sink::Integer)
     capacities = copy(capacities)
     total_flow = 0.0f0
 
@@ -106,7 +106,7 @@ This function computes the adjusted attention matrix for a given layer.
 The function returns an adjusted attention matrix with each entry representing the attention from a token in the current layer to a token in a previous layer
 
 """
-function adjusted_attention(attention_history::Array{Float32,4}, layer::Int, n_tokens::Int)
+function adjusted_attention(attention_history::AbstractArray{<:Real,4}, layer::Integer, n_tokens::Integer)
     # Paper: A = 0.5 * W_att + 0.5 * I, then re-normalize rows to sum to 1.
     # attention_history dims: [source_pos, head, layer, affected_pos]
 
@@ -139,7 +139,7 @@ This function builds the capacity graph with the help of the `adjusted_attention
 The function returns a capacity graph
 
 """
-function build_capacity_graph(attention_history::Array{Float32,4}, n_tokens::Integer, n_layers::Integer)
+function build_capacity_graph(attention_history::AbstractArray{<:Real,4}, n_tokens::Integer, n_layers::Integer)
 
     n_nodes = (n_layers +1 )* n_tokens
 
@@ -185,7 +185,7 @@ This function creates a full attention flow through all layers to all input node
 - `Vector{String}` : The input tokens corresponding to the returned flow values in the vecotr
 
 """
-function attention_flow(bot::ChatBot; input_prompt::String="Once upon a time", source_pos::Int=1)
+function attention_flow(bot::ChatBot; input_prompt::String="Once upon a time", source_pos::Integer=1)
 
     attention_history, output_tokens_strings = get_att_matrix(bot; input_prompt=input_prompt)
     n_tokens = length(output_tokens_strings)

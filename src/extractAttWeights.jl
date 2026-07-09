@@ -274,7 +274,7 @@ function get_att_matrix(bot::ChatBot; input_prompt::String="Once upon a time")
 end
 
 """
-    _extract_att_weights_from_history(attention_history::Array{Float32,4}, output_tokens_strings::Vector{String}, desired_layer::Int=1, desired_head::Int=1)
+    _extract_att_weights_from_history(attention_history::AbstractArray{<:Real,4}, output_tokens_strings::AbstractVector{String}; desired_layer::Integer=1, desired_head::Integer=1)
 
 This function is only needed to test the maximum of the get_att_weights function without model and tokenizer
 
@@ -287,7 +287,7 @@ This function is only needed to test the maximum of the get_att_weights function
 # Returns:
 - `attention_history::Matrix{Float32}` : contains the generated attention values (after softmax) in the form
 """
-function _extract_att_weights_from_history(attention_history::Array{Float32,4}, output_tokens_strings::Vector{String}; desired_layer::Int=1, desired_head::Int=1)
+function _extract_att_weights_from_history(attention_history::AbstractArray{<:Real,4}, output_tokens_strings::AbstractVector{String}; desired_layer::Integer=1, desired_head::Integer=1)
     # Safety Checks
     (desired_layer > 0) || throw(ArgumentError("desired_layer needs to be larger than 0"))
     (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
@@ -307,7 +307,7 @@ end
 
 
 """
-    extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Int=1, desired_head::Int=1)
+    extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Integer=1, desired_head::Integer=1)
 
 Calls a modified version of talktollm from Llama2.jl to collect attention weights.
 Calling this function does not generate new text, so the text inside output_tokens_strings will be semantically the same as input_prompt.
@@ -322,7 +322,7 @@ Calling this function does not generate new text, so the text inside output_toke
 - `attention_history::Matrix{Float32}` : contains the generated attention values (after softmax) in the form
 - `output_tokens_strings::Vector{String}` : contains the individual tokens from input_prompt as separate strings.
 """
-function extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Int=1, desired_head::Int=1)
+function extract_att_weights(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer::Integer=1, desired_head::Integer=1)
     # Safety Checks
     (desired_layer > 0) || throw(ArgumentError("desired_layer needs to be larger than 0"))
     (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
@@ -353,7 +353,7 @@ end
 # Added this function here, since I do not want to export get_att_matrix(), but I do need it here. 
 # Not sure how to do that nicely in julia so this will have to do.
 """
-    calc_att_rollout(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer_depth::Int=1, desired_head::Int=1)
+    calc_att_rollout(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer_depth::Integer=1, desired_head::Integer=1)
 
 This is a slightly changed version of extract_att_weights().
 Instead of returning just the 2D attention matrix for _one layer_ and one attention head, this returns the rolled up attention matrix for one attention head but _all the layers_.
@@ -375,7 +375,7 @@ Calling this function does not generate new text, so the text inside output_toke
         - [:,:,k] -> k selects, which layer is being considered
 - `output_tokens_strings::Vector{String}` : contains the individual tokens from input_prompt as separate strings
 """
-function calc_att_rollout(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer_depth::Int=1, desired_head::Int=1)
+function calc_att_rollout(bot::ChatBot; input_prompt::String="Once upon a time", desired_layer_depth::Integer=1, desired_head::Integer=1)
     # Safety Checks
     (desired_layer_depth > 0) || throw(ArgumentError("desired_layer_depth needs to be larger than 0"))
     (desired_head > 0) || throw(ArgumentError("desired_head needs to be larger than 0"))
