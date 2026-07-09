@@ -26,5 +26,6 @@ using TransformerXAI
     include("visualizeHeatmapTest.jl")
     include("rolloutVisualizerTest.jl")
     include("attentionFlowTest.jl")
+    include("attentionFlowVisualizerTest.jl")
     include("heatmapMatrixTest.jl")
 end
