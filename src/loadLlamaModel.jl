@@ -1,4 +1,6 @@
 """
+    load_llama_model(model_path, vocabulary_path)
+    
 The function creates a Llama2 chatbot.
 
 # Arguments: 

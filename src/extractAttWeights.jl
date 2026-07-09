@@ -18,7 +18,7 @@ with keys and values from this forward pass.
 # Returns
 - `Vector{Float32}`: Logits over the vocabulary for next token prediction (length = `vocab_size`).
 """
-function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, get_att::Bool = false)
+function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, att = nothing)
 
     config = transformer.config
     weights = transformer.weights
@@ -35,9 +35,9 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
     
     #### Addition: Defining "att" outside the for-loops allows returning it afterwards
     #### It naturally needs additional dimensions to hold the additional information
-    if get_att
-        att = zeros(Float32, pos, config.n_heads, config.n_layers)
-    end
+    #if get_att
+    #    att = zeros(Float32, pos, config.n_heads, config.n_layers)
+    #end
 
     for l in 1:config.n_layers
 
@@ -79,7 +79,7 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
             q_head = @view q[((h - 1) * head_size + 1):(h  * head_size)]
             #### Removed local definition of "att"
             ####att = Vector{Float32}(undef, pos)
-            if get_att
+            if att !== nothing
                 attention = @view att[:,h,l]
             else
                 attention = Vector{Float32}(undef, pos)
@@ -130,10 +130,6 @@ function forward_changed!(transformer::Transformer, token::Int32, pos::Int32, ge
     # classifier into logits
     state.logits .= weights.wcls * x
     
-    #### Adding returnvalue "att" if requested
-    if get_att
-        return state.logits, att
-    end
     return state.logits
 
 end
@@ -202,9 +198,10 @@ function talktollm_changed(
         #### Changing behavior depending on get_att
         
         if get_att
-            logits, attention_history[1:pos,:,:,pos] = forward_changed!(transformer, Int32(token), Int32(pos), get_att)
+            current_att = @view attention_history[1:pos, :, :, pos]
+            logits = forward_changed!(transformer, Int32(token), Int32(pos), current_att)
         else
-            logits = forward_changed!(transformer, Int32(token), Int32(pos), get_att)
+            logits = forward_changed!(transformer, Int32(token), Int32(pos))
         end
         ####logits = forward_changed!(transformer, Int32(token), Int32(pos))
 
@@ -212,8 +209,7 @@ function talktollm_changed(
             next = input_tokens[pos + 1]
         else
             if temperature == 0.0f0
-                softmax!(logits)
-                next = wsample(logits)
+                next = argmax(logits)
             else
                 next = sampler(logits)
             end

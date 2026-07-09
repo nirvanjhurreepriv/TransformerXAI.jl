@@ -26,8 +26,13 @@
             token = Int32(2)
             pos = Int32(1)
 
+            n_heads = transformer.config.n_heads
+            n_layers = transformer.config.n_layers
+
+            attention = zeros(Float32, Int(pos), n_heads, n_layers)
+
             # set get_att == true
-            logits, attention = TransformerXAI.forward_changed!(transformer, token, pos, true)
+            logits = TransformerXAI.forward_changed!(transformer, token, pos, attention)
 
             @test logits isa Vector{Float32}
             @test attention isa Array{Float32, 3}

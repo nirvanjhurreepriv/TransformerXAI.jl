@@ -267,6 +267,39 @@ end
 
 The function creates an SVG visualization for the attention rollout. Tokens are shown as dots in a layer grid. Attention strength is represented by line color and thickness.
 
+## Calculate Attention FLow
+
+Source file:
+
+```text
+src/attentionFlow.jl
+```
+
+Main function:
+
+```julia
+attention_flow(
+    bot::ChatBot; 
+    input_prompt::String="Once upon a time", 
+    source_pos::Int=1
+)
+```
+
+Example:
+
+```julia
+using TransformerXAI
+
+model_path = "models/stories42M.bin"
+tokenizer_path = "models/tokenizer.bin"
+
+bot = load_llama_model(model_path, tokenizer_path)
+
+att_flow, tokens = attention_flow(bot)
+```
+
+The function creates a full attention flow through all layers to all input nodes
+
 ## Basic workflow example
 ```julia
 using TransformerXAI
