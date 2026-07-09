@@ -15,7 +15,9 @@ export
     generate_attention_heatmap_matrix,
     calc_att_rollout,
     visualize_attention_rollout,
-    attention_flow
+    attention_flow,
+    attention_flow_heatmap,
+    generate_attention_flow_heatmap
 
 # Include source files
 include("loadLlamaModel.jl")
@@ -24,5 +26,6 @@ include("attentionHeatmapExpanded.jl")
 include("attentionHeatmapMatrix.jl")
 include("attentionRolloutVisualizer.jl")
 include("attentionFlow.jl")
+include("attentionFlowVisualizer.jl")
 
 end # end module

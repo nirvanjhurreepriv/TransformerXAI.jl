@@ -30,7 +30,7 @@ function generate_attention_heatmap_matrix(att_matrix::AbstractMatrix{<:Real}, t
     heatmap(
         1:n,
         1:n,
-        att_matrix',
+        att_matrix,
         title = "Attention Heatmap",
         xlabel = "Attended Token",
         ylabel = "Query Token",

@@ -68,23 +68,28 @@ The function returns the maximum flow between source and sink
 
 """
 function max_flow(capacities::AbstractMatrix{<:Real}, source::Integer, sink::Integer)
-    capacities = copy(capacities)
+    
+    if source == sink
+        return 0f0
+    end
+
+    capacities_flow = copy(capacities)
     total_flow = 0.0f0
 
     while true
-        path = bfs_path(capacities, source, sink)
+        path = bfs_path(capacities_flow, source, sink)
 
         if path === nothing
             break
         end
-        bottleneck = minimum(capacities[path[i], path[i+1]]
+        bottleneck = minimum(capacities_flow[path[i], path[i+1]]
                             for i in 1:length(path)-1)
 
         for i in 1:length(path)-1
             u = path[i]
             v = path[i+1]
-            capacities[u,v] -= bottleneck
-            capacities[v,u] += bottleneck
+            capacities_flow[u,v] -= bottleneck
+            capacities_flow[v,u] += bottleneck
         end
 
         total_flow += bottleneck
@@ -152,6 +157,11 @@ function build_capacity_graph(attention_history::AbstractArray{<:Real,4}, n_toke
         #println("\nLayer $layer")
         #display(A)
 
+        #A = adjusted_attention(attention_history, layer, n_tokens)
+
+        #println("\nLayer $layer")
+        #display(round.(A, digits=3))
+
         #println("Row sums:")
         #println(sum(A, dims=2))
 
@@ -185,11 +195,15 @@ This function creates a full attention flow through all layers to all input node
 - `Vector{String}` : The input tokens corresponding to the returned flow values in the vecotr
 
 """
-function attention_flow(bot::ChatBot; input_prompt::String="Once upon a time", source_pos::Integer=1)
+function attention_flow(bot::ChatBot; input_prompt::String="Once upon a time", source_pos::Integer=1, target_layer::Int=0)
 
     attention_history, output_tokens_strings = get_att_matrix(bot; input_prompt=input_prompt)
+
     n_tokens = length(output_tokens_strings)
     n_layers = bot.transformer.config.n_layers
+    #raw = attention_history[:, 2, 3, :]  # pick any head/layer
+    #println("sum over dim 1: ", sum(raw, dims=1))  # should be ~1s if dim1=key
+    #println("sum over dim 2: ", sum(raw, dims=2))  # should be ~1s if dim2=key
 
     (source_pos >= 1 && source_pos <= n_tokens) || throw(ArgumentError("source_pos must be in 1:$n_tokens, got $source_pos"))
 
@@ -198,15 +212,19 @@ function attention_flow(bot::ChatBot; input_prompt::String="Once upon a time", s
 
     source_node = n_layers * n_tokens + source_pos
 
-    flow_values = Vector{Float32}(undef, n_tokens)
+    flow_values = zeros(Float32, n_tokens)
+
     for j in 1:n_tokens
-        sink_node = j
-        cap_copy = copy(capacity)
-        flow_values[j] = max_flow(cap_copy, source_node, sink_node)
+        sink_node = target_layer * n_tokens + j
+        if sink_node == source_node
+            flow_values[j] = 0f0
+            continue
+        end
+        flow_values[j] = max_flow(copy(capacity), source_node, sink_node)
     end
 
     return flow_values, output_tokens_strings
-
 end
+
 
 
