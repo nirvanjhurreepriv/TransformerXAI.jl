@@ -1,13 +1,18 @@
 """
-    visualize_attention_rollout(rollout_matrix::Array{Float32,3}, output_tokens::Vector{String})
+    visualize_attention_rollout(rollout_matrix::AbstractArray{<:Real}, output_tokens::AbstractVector{String})
 
 Create a simple SVG visualization for the rollout returned by `calc_att_rollout`.
 Tokens are shown as dots in a layer grid. Attention strength is encoded by line
 color and thickness.
 
-Returns storable SVG-code.
+# Arguments
+    rollout_matrix::Array{Float32,3} : 
+    output_tokens::Vector{String} : 
+
+# Returns
+    A storable SVG-code is returned
 """
-function visualize_attention_rollout(rollout_matrix::Array{Float32,3}, output_tokens::Vector{String})
+function visualize_attention_rollout(rollout_matrix::AbstractArray{<:Real}, output_tokens::AbstractVector{String})
     token_count = length(output_tokens)
     matrix_rows, matrix_cols, layer_count = size(rollout_matrix)
 

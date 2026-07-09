@@ -1,5 +1,5 @@
 """
-The function creates a basic heatmap matrix
+    generate_attention_heatmap_matrix(att_matrix::AbstractMatrix{<:Real}, tokens::AbstractVector{String})
 
 # Arguments: 
     att_vector: a one dimensional vector containing the attention weights (can be created with the extract_att_weights() function)
@@ -19,7 +19,7 @@ The function creates a basic heatmap matrix
 
     m = generate_attention_heatmap_matrix(attention_history, token_strings)
 """
-function generate_attention_heatmap_matrix(att_matrix::AbstractMatrix{<:Real}, tokens::Vector{String})
+function generate_attention_heatmap_matrix(att_matrix::AbstractMatrix{<:Real}, tokens::AbstractVector{String})
     n = length(tokens)
 
     if size(att_matrix) != (n, n)

@@ -1,4 +1,6 @@
 """
+    load_llama_model(model_path::String, vocabulary_path::String)
+    
 The function creates a Llama2 chatbot.
 
 # Arguments: 
@@ -11,7 +13,7 @@ The function creates a Llama2 chatbot.
 # Example: 
     bot = load_llama_model("models/stories24M.bin", "models/tokenizer.bin")
 """
-function load_llama_model(model_path, vocabulary_path)
+function load_llama_model(model_path::String, vocabulary_path::String)
     # check if model file exists
     if !isfile(model_path) || !isfile(vocabulary_path)
         throw(ArgumentError("model path or vocabulary path does not exist"))

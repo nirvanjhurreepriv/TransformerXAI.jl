@@ -7,17 +7,24 @@ struct AttentionHeatmap{T<:Real}
 end
 
 """
-    visualize_heatmap(tokens::Vector{String}, attention::Array{Float32,2})
+    visualize_heatmap(tokens::AbstractVector{String}, attention::AbstractMatrix{<:Real,2})
 
 Create an attention-flow heatmap for `tokens`.
 
 `attention` must contain one value for every token pair. The values are ordered
 by referencing token first and reference token second. For two tokens, the
 order is `[1->1, 1->2, 2->1, 2->2]`.
+
+# Arguments
+- `tokens::Vector{String}` : A vector containing the input tokens
+- `attention::Array{Float32,2}` :  A matrix conatining the attention for given input tokens
+
+# Returns
+The function returns an attention heatmap that can be plotted afterwards
 """
 function visualize_heatmap(
-    tokens::Vector{String},
-    attention::Array{Float32,2},
+    tokens::AbstractVector{String},
+    attention::AbstractMatrix{<:Real},
 )
     number_of_tokens = length(tokens)
     expected_values = number_of_tokens * number_of_tokens
@@ -41,6 +48,20 @@ function escape_svg(text::String)
                    '"' => "&quot;", '\'' => "&apos;")
 end
 
+"""
+    Base.show(io::IO, ::MIME"image/svg+xml", heatmap::AttentionHeatmap)
+
+This function displays an extended Attention Heatmap
+    
+# Arguments
+- `io::IO` : The output to where the svg is written
+- `::MIME"image/svg+xml"` : Heatmap type specification
+- `heatmap::AttentionHeatmap` : The attention heatmap that was created with the `visualize_heatmap` function
+
+# Returns
+The function writes a svg in the output stream which is then visible in the folder structure.
+
+"""
 # Display the heatmap as an SVG image in notebooks and other Julia displays.
 function Base.show(io::IO, ::MIME"image/svg+xml", heatmap::AttentionHeatmap)
     number_of_tokens = length(heatmap.tokens)
@@ -89,6 +110,19 @@ function Base.show(io::IO, ::MIME"image/svg+xml", heatmap::AttentionHeatmap)
     print(io, "</svg>")
 end
 
+"""
+    Base.show(io::IO, heatmap::AttentionHeatmap)
+
+The function shows a textual presentation of the svg image
+
+# Arguments
+- `io::IO` : The output to where the svg is written
+- `heatmap::AttentionHeatmap` : The attention heatmap that was created with the `visualize_heatmap` function
+
+# Returns
+The function gives a short description of the heatmap svg 
+
+"""
 function Base.show(io::IO, heatmap::AttentionHeatmap)
     print(io, "AttentionHeatmap with $(length(heatmap.tokens)) tokens")
 end

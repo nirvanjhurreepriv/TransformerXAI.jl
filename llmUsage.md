@@ -58,3 +58,6 @@ Tool: Claude Code (claude-sonnet-4-6) + Claude.ai (claude-sonnet-4-6)
 **Root cause:** The attention_flow merge introduced new dependencies. The stale docs/Manifest.toml pinned to Julia 1.11.9 caused Pkg.instantiate() to fail in CI, breaking the Pages deployment.
 
 **Files changed:** `docs/Manifest.toml`
+
+# Prompt (short version): how can i adjust the attention_history allocation in forward_changed! to work with @view?
+Link to conversation: https://chatgpt.com/share/6a4e6f68-812c-83eb-ba15-0845435fe8ce

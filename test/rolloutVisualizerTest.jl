@@ -67,6 +67,5 @@
     @testset "visualizer rejects invalid input" begin
         @test_throws ArgumentError visualize_attention_rollout(zeros(Float32, 1, 1, 1), String[])
         @test_throws ArgumentError visualize_attention_rollout(zeros(Float32, 2, 2, 1), ["only one"])
-        @test_throws MethodError visualize_attention_rollout(zeros(Float64, 1, 1, 1), ["A"])
     end
 end
