@@ -38,7 +38,7 @@ jobs:
       - uses: julia-actions/cache@v3
       - uses: julia-actions/julia-buildpkg@v1
       - name: Cache model files
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: model-cache
         with:
           path: models
